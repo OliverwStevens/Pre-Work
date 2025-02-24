@@ -23,3 +23,6 @@
     flex: 1;
     aspect-ratio: 1 / 1; 
 }
+.square:hover {
+    background-color: #ffa500; /* Change color to orange (or any color you prefer) */
+}
