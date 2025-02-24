@@ -14,41 +14,44 @@ function computerSelection() {
 function playRound(humanChoice, computerChoice) {
     if (round > 5) return; // Prevent playing more than 5 rounds
 
-    console.log(`Round ${round}`);
-    console.log(`You chose: ${humanChoice} | Computer chose: ${computerChoice}`);
+    let output = `<strong>Round ${round}</strong><br>`;
+    output += `You chose: ${humanChoice} | Computer chose: ${computerChoice}<br>`;
 
     if (humanChoice === computerChoice) {
-        console.log("It's a tie!");
+        output += "It's a tie!<br>";
     } else if (
         (humanChoice === "rock" && computerChoice === "scissors") ||
         (humanChoice === "paper" && computerChoice === "rock") ||
         (humanChoice === "scissors" && computerChoice === "paper")
     ) {
-        console.log("You won this round!");
+        output += "You won this round!<br>";
         humanScore++;
     } else {
-        console.log("You lost this round.");
+        output += "You lost this round.<br>";
         computerScore++;
     }
 
-    console.log(`Current Score: You - ${humanScore} | Computer - ${computerScore}`);
-    
+    output += `Current Score: You - ${humanScore} | Computer - ${computerScore}<br><br>`;
+
     round++;
 
     if (round > 5) {
-        console.log("\nGame Over!");
+        output += `<strong>Game Over!</strong><br>`;
         if (humanScore > computerScore) {
-            console.log(`You won the game! Final Score: ${humanScore} - ${computerScore}`);
+            output += `You won the game! Final Score: ${humanScore} - ${computerScore}`;
         } else if (humanScore < computerScore) {
-            console.log(`You lost the game! Final Score: ${humanScore} - ${computerScore}`);
+            output += `You lost the game! Final Score: ${humanScore} - ${computerScore}`;
         } else {
-            console.log(`It's a tie! Final Score: ${humanScore} - ${computerScore}`);
+            output += `It's a tie! Final Score: ${humanScore} - ${computerScore}`;
         }
 
+        // Remove event listeners after 5 rounds
         rock.removeEventListener("click", handleRock);
         paper.removeEventListener("click", handlePaper);
         scissors.removeEventListener("click", handleScissors);
     }
+
+    writeToDiv(output);
 }
 
 function handleRock() {
@@ -64,11 +67,15 @@ function handleScissors() {
 }
 
 function playGame() {
-    console.log("Welcome to Rock, Paper, Scissors! Best of 5 rounds.");
+    writeToDiv("Welcome to Rock, Paper, Scissors! Best of 5 rounds.<br><br>");
 
     rock.addEventListener("click", handleRock);
     paper.addEventListener("click", handlePaper);
     scissors.addEventListener("click", handleScissors);
+}
+
+function writeToDiv(content) {
+    document.querySelector("#content").innerHTML += content + "<br>";
 }
 
 playGame();
