@@ -1,8 +1,8 @@
 #container {
     display: flex;
     flex-direction: column;
-    width: 400px;
-    height: 400px; 
+    width: 960px;
+    height: 960px; 
     border: 5px solid black;
     margin: auto;
     gap: 2px;
@@ -20,6 +20,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 1; /* Allow squares to resize */
-    aspect-ratio: 1 / 1; /* Ensures they remain squares */
+    flex: 1;
+    aspect-ratio: 1 / 1; 
 }

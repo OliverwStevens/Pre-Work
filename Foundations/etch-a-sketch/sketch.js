@@ -1,7 +1,23 @@
-const container = document.querySelector("#container");
+let size = 16;
+const btn = document.querySelector("button");
+
+btn.onclick = () => {
+    let newSize = parseInt(prompt("What size do you want?", size), 10);
+
+    if (isNaN(newSize) || newSize <= 0) {
+        newSize = size;
+    }
+
+    if (newSize > 100) {
+        newSize = 100;
+    }
+
+    size = newSize; 
+    createGrid(size); 
+};
 
 function createGrid(size) {
-    container.innerHTML = ""; // Clear previous grid
+    container.innerHTML = "";
 
 
     for (let y = 0; y < size; y++) {
@@ -11,7 +27,7 @@ function createGrid(size) {
         for (let x = 0; x < size; x++) {
             let cell = document.createElement("div");
             cell.classList.add("square");
-            cell.textContent = "hi";
+            cell.textContent = " ";
             row.appendChild(cell);
         }
 
@@ -19,6 +35,4 @@ function createGrid(size) {
     }
 }
 
-// Example: Change this number to test different sizes
-let size = 16; // 16 cells (4x4), try changing to 25 (5x5) or 36 (6x6)
 createGrid(size);
