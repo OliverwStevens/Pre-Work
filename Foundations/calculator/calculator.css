@@ -63,14 +63,15 @@
 #display {
     background: aquamarine;
     height: 80px;
-    width: 100%;
-    font-size: 2rem;
+    width: 400px;
+    font-size: 3rem;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: right;
     font-weight: bold;
     border-radius: 8px;
     border: 2px solid black;
     box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1);
     margin-bottom: 10px;
+    padding-right: 30px;
 }
