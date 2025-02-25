@@ -1,43 +1,76 @@
 .container {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    gap: 10px;
+    align-items: top;
+    gap: 15px;
     background-color: lightgray;
-    width: 400px;
+    width: 350px;
+    padding: 25px;
     margin: auto;
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
 }
 
 .num-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     gap: 10px;
     margin: 10px;
+
 }
 
 .digit {
     background: beige;
-    width: 60px;
-    height: 90px; 
+    width: 70px;
+    height: 100px;
     text-align: center;
     font-size: 2rem;
     font-weight: 800;
     border: 2px solid black;
+    border-radius: 8px;
     padding: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
 }
 
+.digit:hover {
+    background: rgb(245, 222, 179);
+    transform: scale(1.05);
+}
+.opperation{
+    background: lightcoral;
+    width: 70px;
+    height: 50px;
+    text-align: center;
+    font-size: x-large;
+    font-weight: 800;
+    border: 2px solid black;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.opperation:hover {
+    background: rgb(194, 113, 113);
+    transform: scale(1.05);
+}
 #display {
     background: aquamarine;
-    height: 100px; /* Increased height */
-    width: 300px;  /* Increased width */
-    font-size: 2rem;  /* Increased text size */
+    height: 80px;
+    width: 100%;
+    font-size: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
+    border-radius: 8px;
+    border: 2px solid black;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
 }
