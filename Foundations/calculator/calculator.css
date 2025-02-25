@@ -1,0 +1,15 @@
+.digit{
+    background: beige;
+    width: 30px;
+    height: 45px;
+
+    text-align: center;
+    font-size: large;
+    font-weight: 800;
+    border: 2px, solid black;
+    padding: 5px;
+}
+#display{
+    background: aquamarine;
+    height: 50px;
+}
