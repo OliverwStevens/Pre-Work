@@ -1,15 +1,43 @@
-.digit{
-    background: beige;
-    width: 30px;
-    height: 45px;
-
-    text-align: center;
-    font-size: large;
-    font-weight: 800;
-    border: 2px, solid black;
-    padding: 5px;
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background-color: lightgray;
+    width: 400px;
+    margin: auto;
 }
-#display{
+
+.num-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 10px;
+}
+
+.digit {
+    background: beige;
+    width: 60px;
+    height: 90px; 
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 800;
+    border: 2px solid black;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#display {
     background: aquamarine;
-    height: 50px;
+    height: 100px; /* Increased height */
+    width: 300px;  /* Increased width */
+    font-size: 2rem;  /* Increased text size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
 }
