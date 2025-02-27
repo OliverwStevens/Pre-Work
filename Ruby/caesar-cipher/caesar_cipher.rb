@@ -1,21 +1,24 @@
-
 def caesar_cipher(message, shift)
-    alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-    encoded_message = ""
-    message.split("").each do |letter|
-      if alphabet.include?(letter)
-        index = alphabet.index(letter)
+  lowercase_alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+  uppercase_alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+
+  encoded_message = ""
   
-        new_index = index + shift
-        if new_index > 25
-          new_index = new_index - 26
-        end
-        encoded_message += alphabet[new_index]
-      else
-        encoded_message += letter
-      end
+  message.split("").each do |letter|
+    if lowercase_alphabet.include?(letter)
+      index = lowercase_alphabet.index(letter)
+      new_index = (index + shift) % 26
+      encoded_message += lowercase_alphabet[new_index]
+    elsif uppercase_alphabet.include?(letter)
+      index = uppercase_alphabet.index(letter)
+      new_index = (index + shift) % 26
+      encoded_message += uppercase_alphabet[new_index]
+    else
+      encoded_message += letter
     end
-    puts encoded_message
   end
-  caesar_cipher(gets.chomp.downcase, gets.chomp.to_i)
   
+  puts encoded_message
+end
+
+caesar_cipher(gets.chomp, gets.chomp.to_i)
