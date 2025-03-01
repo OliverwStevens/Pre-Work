@@ -29,7 +29,7 @@ module TicTacToeMethods
   end
 
   def print_board(board)
-    puts '  0 1 2'
+    puts "  0 1 2"
     board.each_with_index do |row, index|
       puts "#{index} #{row.join(' ')}"
     end
@@ -40,6 +40,6 @@ module TicTacToeMethods
   end
 
   def board_full?(board)
-    board.flatten.none? { |cell| cell == ' ' }
+    board.flatten.none? { |cell| cell == " " }
   end
 end
