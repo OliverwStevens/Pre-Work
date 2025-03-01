@@ -12,27 +12,20 @@ module TicTacToeMethods
   end
 
   def check_line?(marker, strip)
-    strip.select do |line|
-      win = line.all?(marker)
-      next unless win == true
-
-      # player_win(marker)
-      p line
-      puts 'A player won'
-      return win
+    strip.any? do |line|
+      line.all?(marker)
     end
   end
 
-  def check_if_game_won(marker, board)
-    # put the ? in the check line to return a bool
-    if check_line?(marker,
-                   [main_diagonal(board)]) || check_line?(marker,
-                                                          [anti_diagonal(board)]) || check_line?(marker,
-                                                                                                 rotate_90_clockwise(board)) || check_line?(
-                                                                                                   marker, board
-                                                                                                 )
+  def check_if_game_won?(marker, board)
+    if check_line?(marker, [main_diagonal(board)]) ||
+       check_line?(marker, [anti_diagonal(board)]) ||
+       check_line?(marker, rotate_90_clockwise(board)) ||
+       check_line?(marker, board)
       puts "#{marker} has won the game!"
+      return true
     end
+    false
   end
 
   def print_board(board)
@@ -44,5 +37,9 @@ module TicTacToeMethods
 
   def make_move(board, marker, move_row, move_column)
     board[move_row][move_column] = marker
+  end
+
+  def board_full?(board)
+    board.flatten.none? { |cell| cell == ' ' }
   end
 end
