@@ -19,6 +19,17 @@ def clean_phone_number(phone_number)
   end
 end
 
+def time_targeting(timestamps)
+  hours = timestamps.map { |ts| ts.split.last.split(":").first.to_i }
+  frequency = hours.tally
+
+  max_count = frequency.values.max
+  mode_hours = frequency.select { |hour, count| count == max_count }.keys
+
+  # puts frequency
+  mode_hours.sort
+end
+
 def legislators_by_zipcode(zip)
   civic_info = Google::Apis::CivicinfoV2::CivicInfoService.new
   civic_info.key = "AIzaSyClRzDqDh5MsXwnCWi0kOiiBivP6JsSyBw"
@@ -47,14 +58,15 @@ end
 puts "EventManager initialized."
 
 contents = CSV.open(
-  "event_attendees.csv",
+  "./Ruby/event_manager/lib/event_attendees.csv",
   headers: true,
   header_converters: :symbol
 )
 
-template_letter = File.read("form_letter.erb")
+template_letter = File.read("./Ruby/event_manager/lib/form_letter.erb")
 erb_template = ERB.new template_letter
 
+regdates = []
 contents.each do |row|
   id = row[0]
   name = row[:first_name]
@@ -63,9 +75,11 @@ contents.each do |row|
 
   # phone number method, ready for appropriate implementation
   phone_number = clean_phone_number(row[:homephone])
-  puts phone_number
+  # puts phone_number
 
-  form_letter = erb_template.result(binding)
+  regdates.push(row[:regdate])
+  # form_letter = erb_template.result(binding)
 
-  save_thank_you_letter(id, form_letter)
+  # save_thank_you_letter(id, form_letter)
 end
+puts time_targeting(regdates)
