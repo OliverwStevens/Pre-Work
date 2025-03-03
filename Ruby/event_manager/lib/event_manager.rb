@@ -30,6 +30,31 @@ def time_targeting(timestamps)
   mode_hours.sort
 end
 
+def find_weekday(timestamps)
+  require "date"
+
+  days_of_week = timestamps.map do |ts|
+    parts = ts.split
+    date_part = parts[0]
+
+    month, day, year = date_part.split("/")
+
+    year = "20#{year}" if year.length == 2
+
+    date = Date.new(year.to_i, month.to_i, day.to_i)
+
+    date.strftime("%A")
+  end
+
+  frequency = days_of_week.tally
+
+  max_count = frequency.values.max
+
+  mode_days = frequency.select { |day, count| count == max_count }.keys
+
+  mode_days.sort
+end
+
 def legislators_by_zipcode(zip)
   civic_info = Google::Apis::CivicinfoV2::CivicInfoService.new
   civic_info.key = "AIzaSyClRzDqDh5MsXwnCWi0kOiiBivP6JsSyBw"
@@ -46,9 +71,11 @@ def legislators_by_zipcode(zip)
 end
 
 def save_thank_you_letter(id, form_letter)
-  Dir.mkdir("output") unless Dir.exist?("output")
+  output_dir = "Ruby/event_manager/lib/output"
 
-  filename = "output/thanks_#{id}.html"
+  FileUtils.mkdir(output_dir) unless Dir.exist?(output_dir)
+
+  filename = File.join(output_dir, "thanks_#{id}.html")
 
   File.open(filename, "w") do |file|
     file.puts form_letter
@@ -58,12 +85,12 @@ end
 puts "EventManager initialized."
 
 contents = CSV.open(
-  "./Ruby/event_manager/lib/event_attendees.csv",
+  "./Ruby/event_manager/event_attendees.csv",
   headers: true,
   header_converters: :symbol
 )
 
-template_letter = File.read("./Ruby/event_manager/lib/form_letter.erb")
+template_letter = File.read("./Ruby/event_manager/form_letter.erb")
 erb_template = ERB.new template_letter
 
 regdates = []
@@ -78,8 +105,9 @@ contents.each do |row|
   # puts phone_number
 
   regdates.push(row[:regdate])
-  # form_letter = erb_template.result(binding)
+  form_letter = erb_template.result(binding)
 
-  # save_thank_you_letter(id, form_letter)
+  save_thank_you_letter(id, form_letter)
 end
 puts time_targeting(regdates)
+puts find_weekday(regdates)
