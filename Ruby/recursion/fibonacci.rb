@@ -11,6 +11,7 @@ def fibs(n)
 end
 
 def fibs_rec(n, sequence = [0, 1])
+  puts "This was printed recursively"
   return sequence[0...n] if n <= sequence.length
 
   sequence.push(sequence[-1] + sequence[-2])
