@@ -21,15 +21,43 @@ class LinkedList
   end
 
   def size
+    current = @head
+    counter = 0
+    while current
+      counter += 1
+      current = current.next_node
+    end
+
+    counter
   end
 
-  def head
+  def head # rubocop:disable Style/TrivialAccessors
+    @head
   end
 
   def tail
+    return nil if @head.nil?
+
+    current = @head
+    current = current.next_node until current.next_node.nil?
+    current
   end
 
   def at(index)
+    current = @head
+    counter = 0
+    while counter < index
+      counter += 1
+
+      current = current.next_node
+      break if current.nil?
+    end
+
+    if current.nil?
+      "Error: index to big"
+    else
+      current.value
+    end
   end
 
   def pop
