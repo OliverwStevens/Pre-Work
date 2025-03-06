@@ -6,5 +6,4 @@ list.append("Sir")
 list.prepend("Oh!")
 
 puts list
-list.pop
-puts list
+puts list.contains?("Oh!")
