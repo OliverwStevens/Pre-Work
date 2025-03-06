@@ -8,5 +8,6 @@ list.prepend("Oh!")
 puts list
 puts list.find("Sir")
 list.insert_at("Good", 0)
-puts list.at(2)
+puts list
+list.remove_at(1)
 puts list
