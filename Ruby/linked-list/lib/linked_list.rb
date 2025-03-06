@@ -44,6 +44,9 @@ class LinkedList
   end
 
   def at(index)
+    index = index.to_i
+    return "Index must be not be negative" if index.negative?
+
     current = @head
     counter = 0
     while counter < index
