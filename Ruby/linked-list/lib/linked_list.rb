@@ -83,6 +83,18 @@ class LinkedList
   end
 
   def find(value)
+    return if @head.nil?
+
+    current = @head
+    counter = 0
+    while current
+      return counter if value == current.value
+
+      counter += 1
+      current = current.next_node
+    end
+
+    nil
   end
 
   def to_s

@@ -6,4 +6,4 @@ list.append("Sir")
 list.prepend("Oh!")
 
 puts list
-puts list.contains?("Oh!")
+puts list.find("Sir")
