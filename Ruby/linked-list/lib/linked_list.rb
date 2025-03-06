@@ -83,8 +83,6 @@ class LinkedList
   end
 
   def find(value)
-    return if @head.nil?
-
     current = @head
     counter = 0
     while current
