@@ -6,4 +6,5 @@ list.append("Sir")
 list.prepend("Oh!")
 
 puts list
-puts list.at(2)
+list.pop
+puts list
