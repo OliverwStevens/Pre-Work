@@ -105,6 +105,24 @@ class LinkedList
     end
     "#{string}nil"
   end
+
+  def insert_at(value, index)
+    return prepend(value) if index.zero?
+    return if index < 0
+
+    current = @head
+    counter = 0
+
+    while counter < index - 1 && !current.nil?
+      current = current.next_node
+      counter += 1
+    end
+
+    return if current.nil?
+
+    node = Node.new(value, current.next_node)
+    current.next_node = node
+  end
 end
 
 class Node
