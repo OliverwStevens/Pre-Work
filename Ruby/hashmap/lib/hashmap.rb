@@ -2,7 +2,8 @@ class HashMap
   LOAD_FACTOR = 0.75
 
   def initialize
-    @capacity = 16
+    @starting_capacity = 16
+    @capacity = @starting_capacity
     @buckets = Array.new(@capacity) { [] }
     @size = 0
   end
@@ -72,8 +73,8 @@ class HashMap
   end
 
   def clear
-    # figure out way to reset capacity
-    @buckets = Array.new(@capacity) { [] }
+    @buckets = Array.new(@starting_capacity) { [] }
+    @size = 0
   end
 
   def info
