@@ -1,6 +1,9 @@
 class HashMap
-  @@load_factor = 0.8
-  @@capacity = 16
+  LOAD_FACTOR = 0.8
+  def initialize
+    @capacity = 16
+    @buckets = Array.new(@capacity)
+  end
 
   def hash(key)
     hash_code = 0
@@ -8,6 +11,6 @@ class HashMap
 
     key.each_char { |char| hash_code = (prime_number * hash_code) + char.ord }
 
-    hash_code % @@capacity
+    hash_code
   end
 end
