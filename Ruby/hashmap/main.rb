@@ -1,5 +1,5 @@
 require_relative "lib/hashmap"
-
+require_relative "lib/hashset"
 test = HashMap.new
 
 test.set("apple", "red")
@@ -27,3 +27,29 @@ p test.entries
 
 # puts test.info
 # puts test.clear
+
+#----------------------
+
+test_set = HashSet.new
+
+test_set.set("apple")
+test_set.set("banana")
+test_set.set("carrot")
+test_set.set("dog")
+test_set.set("elephant")
+test_set.set("frog")
+test_set.set("grape")
+test_set.set("hat")
+test_set.set("ice cream")
+test_set.set("jacket")
+test_set.set("kite")
+test_set.set("lion")
+test_set.set("moon")
+
+puts test_set.has?("moon")
+puts test_set.remove("moon")
+puts test_set.length
+p test_set.entries
+
+# puts test_set.info
+# test_set.clear
