@@ -14,5 +14,16 @@ test.set("ice cream", "white")
 test.set("jacket", "blue")
 test.set("kite", "pink")
 test.set("lion", "golden")
+test.set("moon", "silver")
 
+puts test.get("moon")
+puts test.remove("jacket")
+puts test.has?("jacket")
+puts test.length
+
+p test.keys
+p test.values
 p test.entries
+
+# puts test.info
+# puts test.clear
