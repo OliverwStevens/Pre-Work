@@ -21,3 +21,4 @@ test.info
 test.set("kitse", "pink")
 test.set("lsion", "golden")
 test.info
+puts test.has?("kites")

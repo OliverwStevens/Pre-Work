@@ -47,6 +47,12 @@ class HashMap
     nil # Key not found
   end
 
+  def has?(key)
+    index = hash(key)
+    bucket = @buckets[index]
+    bucket.any? { |pair| pair[0] == key }
+  end
+
   def remove(key)
     index = hash(key)
     bucket = @buckets[index]
