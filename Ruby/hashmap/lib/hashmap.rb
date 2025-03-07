@@ -77,6 +77,18 @@ class HashMap
     @size = 0
   end
 
+  def keys
+    @buckets.flatten(1).map { |pair| pair[0] }
+  end
+
+  def values
+    @buckets.flatten(1).map { |pair| pair[1] }
+  end
+
+  def entries
+    @buckets.flatten(1)
+  end
+
   def info
     puts "Load Factor: #{@size.to_f / @capacity} Capacity: #{@capacity} Size: #{@size}"
   end

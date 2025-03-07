@@ -14,12 +14,5 @@ test.set("ice cream", "white")
 test.set("jacket", "blue")
 test.set("kite", "pink")
 test.set("lion", "golden")
-test.info
-puts test.remove("lion")
-puts test.get("lion")
-test.info
-test.set("kitse", "pink")
-test.set("lsion", "golden")
-test.info
-puts test.has?("kites")
-puts test.length
+
+p test.entries
