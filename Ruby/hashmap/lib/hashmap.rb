@@ -67,6 +67,10 @@ class HashMap
     nil
   end
 
+  def length
+    @size
+  end
+
   def info
     puts "Load Factor: #{@size.to_f / @capacity} Capacity: #{@capacity} Size: #{@size}"
   end
