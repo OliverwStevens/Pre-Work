@@ -71,6 +71,11 @@ class HashMap
     @size
   end
 
+  def clear
+    # figure out way to reset capacity
+    @buckets = Array.new(@capacity) { [] }
+  end
+
   def info
     puts "Load Factor: #{@size.to_f / @capacity} Capacity: #{@capacity} Size: #{@size}"
   end
