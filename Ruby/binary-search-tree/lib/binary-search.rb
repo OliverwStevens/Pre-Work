@@ -39,6 +39,17 @@ class Tree
     root
   end
 
+  def insert(data, root = @root)
+    return Node.new(data) if root.nil?
+
+    if data < root.data
+      root.left = insert(data, root.left)
+    elsif data > root.data
+      root.right = insert(data, root.right)
+    end
+    root
+  end
+
   # printing function for visualization
   def pretty_print(node = @root, prefix = "", is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
