@@ -50,6 +50,13 @@ class Tree
     root
   end
 
+  def get_successor(curr)
+    curr = curr.right
+
+    curr = curr.left while !curr.nil? && !curr.left.nil?
+    curr
+  end
+
   # printing function for visualization
   def pretty_print(node = @root, prefix = "", is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
