@@ -9,6 +9,8 @@ class Node
 end
 
 class Tree
+  attr_reader :root
+
   # accepts array of values
   def initialize(values)
     @root = build_tree(values)
