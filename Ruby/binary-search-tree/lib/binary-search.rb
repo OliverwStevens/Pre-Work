@@ -135,6 +135,14 @@ class Tree
     inorder(root.right)
   end
 
+  def preorder(root = @root)
+    return if root.nil?
+
+    puts root.data
+    preorder(root.left)
+    preorder(root.right)
+  end
+
   # printing function for visualization
   def pretty_print(node = @root, prefix = "", is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
