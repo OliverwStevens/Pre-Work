@@ -91,6 +91,42 @@ class Tree
     find(data, root.left)
   end
 
+  def level_order(root = @root)
+    return [] if root.nil?
+
+    queue = [root]
+    result = []
+
+    until queue.empty?
+      current = queue.shift
+
+      result.push(current.data)
+
+      yield current if block_given?
+
+      queue.push(current.left) unless current.left.nil?
+      queue.push(current.right) unless current.right.nil?
+    end
+    result
+  end
+
+  def level_order_recursive(root = @root, level = 0, result = {})
+    return [] if root.nil?
+
+    result[level] ||= []
+
+    result[level].push(root.data)
+
+    yield root if block_given?
+
+    level_order_recursive(root.left, level + 1, result) unless root.left.nil?
+    level_order_recursive(root.right, level + 1, result) unless root.right.nil?
+
+    return result.values.flatten if level.zero?
+
+    result
+  end
+
   # printing function for visualization
   def pretty_print(node = @root, prefix = "", is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
