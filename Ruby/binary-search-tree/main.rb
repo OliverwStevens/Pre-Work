@@ -12,4 +12,4 @@ tree.pretty_print
 
 # p values
 # p recursive_values
-tree.preorder
+tree.postorder
