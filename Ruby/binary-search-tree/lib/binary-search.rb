@@ -151,6 +151,23 @@ class Tree
     puts root.data
   end
 
+  def height(root = @root)
+    return -1 if root.nil?
+
+    1 + [height(root.left), height(root.right)].max
+  end
+
+  def depth(data, root = @root, edges = 0)
+    return -1 if root.nil?
+    return edges if root.data == data
+
+    if data < root.data
+      depth(data, root.left, edges + 1)
+    else
+      depth(data, root.right, edges + 1)
+    end
+  end
+
   # printing function for visualization
   def pretty_print(node = @root, prefix = "", is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right

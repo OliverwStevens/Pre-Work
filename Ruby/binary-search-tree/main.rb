@@ -12,4 +12,4 @@ tree.pretty_print
 
 # p values
 # p recursive_values
-tree.postorder
+puts tree.height(tree.find(5))
