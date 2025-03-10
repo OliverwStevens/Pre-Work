@@ -1,5 +1,3 @@
-require "set"
-
 CHESS_SQUARES = (0..7).flat_map { |x| (0..7).map { |y| [x, y] } }
 
 def knight_moves(start, stop)
@@ -33,5 +31,5 @@ def knight_moves(start, stop)
   nil
 end
 
-moves = knight_moves([3, 3], [4, 3])
+moves = knight_moves([4, 3], [7, 3])
 puts "You made it in #{moves.length - 1} moves! Here is your path: #{moves.inspect}"
