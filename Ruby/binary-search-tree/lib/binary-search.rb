@@ -174,4 +174,24 @@ class Tree
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
+
+  def balanced?
+    balanced_height(@root) != -1
+  end
+
+  private
+
+  # Balanced? method split into two methods for optimization
+  def balanced_height(node)
+    return -1 if node.nil?
+
+    left_height = balanced_height(node.left)
+    right_height = balanced_height(node.right)
+
+    height_diff = (left_height - right_height).abs
+
+    return -1 if height_diff > 1
+
+    [left_height, right_height].max + 1
+  end
 end
