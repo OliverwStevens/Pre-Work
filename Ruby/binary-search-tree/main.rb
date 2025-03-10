@@ -13,3 +13,10 @@ tree.pretty_print
 # p values
 # p recursive_values
 puts tree.balanced?
+tree.insert(10_000)
+tree.pretty_print
+puts tree.balanced?
+tree.rebalance
+tree.pretty_print
+puts tree.balanced?
+puts tree.postorder

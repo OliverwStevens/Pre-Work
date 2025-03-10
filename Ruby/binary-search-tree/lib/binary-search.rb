@@ -13,7 +13,7 @@ class Tree
 
   # accepts array of values
   def initialize(values)
-    @root = build_tree(values.sort)
+    @root = build_tree(values)
   end
 
   def build_tree(data)
@@ -127,28 +127,54 @@ class Tree
     result
   end
 
-  def inorder(root = @root)
-    return if root.nil?
+  def inorder(root = @root, &block)
+    return [] if root.nil?
 
-    inorder(root.left)
-    puts root.data
-    inorder(root.right)
+    result = []
+    result.concat(inorder(root.left, &block))
+
+    if block_given?
+      yield root
+    else
+      result.push(root.data)
+    end
+
+    result.concat(inorder(root.right, &block))
+
+    result
   end
 
-  def preorder(root = @root)
-    return if root.nil?
+  def preorder(root = @root, &block)
+    return [] if root.nil?
 
-    puts root.data
-    preorder(root.left)
-    preorder(root.right)
+    result = []
+
+    if block_given?
+      yield root
+    else
+      result.push(root.data)
+    end
+
+    result.concat(preorder(root.left, &block))
+    result.concat(preorder(root.right, &block))
+
+    result
   end
 
-  def postorder(root = @root)
-    return if root.nil?
+  def postorder(root = @root, &block)
+    return [] if root.nil?
 
-    postorder(root.left)
-    postorder(root.right)
-    puts root.data
+    result = []
+    result.concat(postorder(root.left, &block))
+    result.concat(postorder(root.right, &block))
+
+    if block_given?
+      yield root
+    else
+      result.push(root.data)
+    end
+
+    result
   end
 
   def height(root = @root)
@@ -177,6 +203,11 @@ class Tree
 
   def balanced?
     balanced_height(@root) != -1
+  end
+
+  def rebalance
+    data = inorder
+    @root = build_tree(data)
   end
 
   private
