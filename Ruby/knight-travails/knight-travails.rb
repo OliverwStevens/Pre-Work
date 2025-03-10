@@ -1,7 +1,6 @@
-def knight_moves(start)
-  chess_squares = (0..7).flat_map { |x| (0..7).map { |y| [x, y] } }
+CHESS_SQUARES = (0..7).flat_map { |x| (0..7).map { |y| [x, y] } }
 
-  queue = []
+def knight_moves(start)
   x, y = start
 
   moves = [
@@ -9,9 +8,7 @@ def knight_moves(start)
     [x + 1, y + 2], [x + 1, y - 2], [x - 1, y + 2], [x - 1, y - 2]
   ]
 
-  legal_moves = moves.select { |move| chess_squares.include?(move) }
-
-  # for each legal move call the function again
+  legal_moves = moves.select { |move| CHESS_SQUARES.include?(move) }
 end
 
 p knight_moves([0, 0])
