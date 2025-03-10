@@ -201,8 +201,10 @@ class Tree
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
 
-  def balanced?
-    balanced_height(@root) != -1
+  def balanced?(root = @root)
+    return true if root.nil?
+
+    get_height(root) != -1
   end
 
   def rebalance
@@ -212,16 +214,17 @@ class Tree
 
   private
 
-  # Balanced? method split into two methods for optimization
-  def balanced_height(node)
-    return -1 if node.nil?
+  # used this helper method instead of other height method to avoid O(n^2) time
+  def get_height(node)
+    return 0 if node.nil?
 
-    left_height = balanced_height(node.left)
-    right_height = balanced_height(node.right)
+    left_height = get_height(node.left)
+    return -1 if left_height == -1
 
-    height_diff = (left_height - right_height).abs
+    right_height = get_height(node.right)
+    return -1 if right_height == -1
 
-    return -1 if height_diff > 1
+    return -1 if (left_height - right_height).abs > 1
 
     [left_height, right_height].max + 1
   end

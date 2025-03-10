@@ -1,22 +1,40 @@
 require_relative "lib/binary-search"
-values = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
-tree = Tree.new(values)
 
-puts tree.root.data
+tree = Tree.new(Array.new(15) { rand(1..100) })
+
 tree.pretty_print
 
-# tree.level_order { |node| puts node.data }
-
-# values = tree.level_order
-# recursive_values = tree.level_order_recursive
-
-# p values
-# p recursive_values
 puts tree.balanced?
-tree.insert(10_000)
+
+p tree.level_order
+
+p tree.inorder
+
+p tree.preorder
+
+p tree.postorder
+
+tree.insert(150)
+tree.insert(160)
+tree.insert(170)
+tree.insert(180)
+tree.insert(190)
+tree.insert(200)
+
 tree.pretty_print
+
 puts tree.balanced?
+
 tree.rebalance
+
 tree.pretty_print
+
 puts tree.balanced?
-puts tree.postorder
+
+p tree.level_order
+
+p tree.inorder
+
+p tree.preorder
+
+p tree.postorder
