@@ -1,3 +1,5 @@
+require "set"
+
 CHESS_SQUARES = (0..7).flat_map { |x| (0..7).map { |y| [x, y] } }
 
 def knight_moves(start, stop)
@@ -6,10 +8,9 @@ def knight_moves(start, stop)
   queue = [[start]]
   visited = Set.new([start])
 
-  x, y = start
   moves = [
-    [x + 2, y + 1], [x + 2, y - 1], [x - 2, y + 1], [x - 2, y - 1],
-    [x + 1, y + 2], [x + 1, y - 2], [x - 1, y + 2], [x - 1, y - 2]
+    [2, 1], [2, -1], [-2, 1], [-2, -1],
+    [1, 2], [1, -2], [-1, 2], [-1, -2]
   ]
 
   until queue.empty?
@@ -22,7 +23,7 @@ def knight_moves(start, stop)
     moves.each do |dx, dy|
       next_move = [x + dx, y + dy]
 
-      if CHESS_SQUARES.include?(next_move) && !visited.include?(next_move)
+      if next_move.all? { |coordinate| coordinate.between?(0, 7) } && !visited.include?(next_move)
         visited.add(next_move)
         queue.push(path + [next_move])
       end
@@ -32,4 +33,5 @@ def knight_moves(start, stop)
   nil
 end
 
-p knight_moves([0, 0], [0, 1])
+moves = knight_moves([3, 3], [4, 3])
+puts "You made it in #{moves.length - 1} moves! Here is your path: #{moves.inspect}"
