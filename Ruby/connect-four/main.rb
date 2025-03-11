@@ -4,5 +4,7 @@ board = Board.new
 
 board.play_piece("x", 0)
 board.play_piece("x", 0)
-
+board.play_piece("x", 0)
+board.play_piece("x", 0)
 board.print_board
+puts board.vertical_win?("x")

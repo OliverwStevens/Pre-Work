@@ -30,9 +30,12 @@ class Board
     @grid.any? { |row| row.join.include?(marker * 4) }
   end
 
-  def vertical_win
+  def vertical_win?(marker)
+    (0...COLUMNS).any? do |col|
+      @grid.map { |row| row[col] }.join.include?(marker * 4)
+    end
   end
 
-  def diagonal_win
+  def diagonal_win?(marker)
   end
 end

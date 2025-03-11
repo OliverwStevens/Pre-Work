@@ -50,4 +50,52 @@ describe Board do
       expect(board.horizontal_win?("x")).to eql(true)
     end
   end
+
+  describe "#vertical_win?" do
+    it "returns false when the board is empty" do
+      board = Board.new
+      expect(board.vertical_win?("x")).to eql(false)
+    end
+
+    it "returns false when there are pieces but not four in a row" do
+      board = Board.new
+      board.play_piece("x", 0)
+      board.play_piece("x", 0)
+      board.play_piece("x", 0)
+
+      expect(board.vertical_win?("x")).to eql(false)
+    end
+
+    it "returns true when there are exactly four in a row vertically" do
+      board = Board.new
+      board.play_piece("x", 0)
+      board.play_piece("x", 0)
+      board.play_piece("x", 0)
+      board.play_piece("x", 0)
+
+      expect(board.vertical_win?("x")).to eql(true)
+    end
+
+    it "returns true when there are more than four in a row vertically" do
+      board = Board.new
+      board.play_piece("x", 1)
+      board.play_piece("x", 1)
+      board.play_piece("x", 1)
+      board.play_piece("x", 1)
+      board.play_piece("x", 1)
+
+      expect(board.vertical_win?("x")).to eql(true)
+    end
+
+    it "returns false if pieces are stacked but interrupted by another symbol" do
+      board = Board.new
+      board.play_piece("x", 2)
+      board.play_piece("x", 2)
+      board.play_piece("o", 2)
+      board.play_piece("x", 2)
+      board.play_piece("x", 2)
+
+      expect(board.vertical_win?("x")).to eql(false)
+    end
+  end
 end
