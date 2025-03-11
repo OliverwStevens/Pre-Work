@@ -20,4 +20,19 @@ class Board
     end
     false
   end
+
+  def is_winning_move?(marker)
+    # methods for checking horizontal, vertical, diagonal
+    horizontal_win?(marker)
+  end
+
+  def horizontal_win?(marker)
+    @grid.any? { |row| row.join.include?(marker * 4) }
+  end
+
+  def vertical_win
+  end
+
+  def diagonal_win
+  end
 end
