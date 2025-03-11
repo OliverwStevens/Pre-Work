@@ -159,4 +159,60 @@ describe Board do
       expect(board.diagonal_win?("x")).to eql(false)
     end
   end
+
+  describe "#winning_move?" do
+    it "returns true for a horizontal win" do
+      board = Board.new
+      board.play_piece("x", 0)
+      board.play_piece("x", 1)
+      board.play_piece("x", 2)
+      board.play_piece("x", 3)
+
+      expect(board.winning_move?("x")).to eql(true)
+    end
+
+    it "returns true for a vertical win" do
+      board = Board.new
+      board.play_piece("x", 0)
+      board.play_piece("x", 0)
+      board.play_piece("x", 0)
+      board.play_piece("x", 0)
+
+      expect(board.winning_move?("x")).to eql(true)
+    end
+
+    it "returns true for a diagonal win (bottom-left to top-right)" do
+      board = Board.new
+      board.play_piece("x", 0)
+      board.play_piece("x", 1)
+      board.play_piece("x", 2)
+      board.play_piece("x", 3)
+
+      expect(board.winning_move?("x")).to eql(true)
+    end
+
+    it "returns true for a diagonal win (top-left to bottom-right)" do
+      board = Board.new
+      board.play_piece("x", 0)
+      board.play_piece("x", 1)
+      board.play_piece("x", 2)
+      board.play_piece("x", 3)
+
+      expect(board.winning_move?("x")).to eql(true)
+    end
+
+    it "returns false when there is no win" do
+      board = Board.new
+      expect(board.winning_move?("x")).to eql(false)
+    end
+
+    it "returns false if only one direction has a potential win" do
+      board = Board.new
+      board.play_piece("x", 0)
+      board.play_piece("x", 1)
+      board.play_piece("x", 2)
+
+      expect(board.winning_move?("x")).to eql(false)
+    end
+  end
 end

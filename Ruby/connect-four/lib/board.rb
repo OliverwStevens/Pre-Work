@@ -21,9 +21,9 @@ class Board
     false
   end
 
-  def is_winning_move?(marker)
+  def winning_move?(marker)
     # methods for checking horizontal, vertical, diagonal
-    horizontal_win?(marker)
+    horizontal_win?(marker) || vertical_win?(marker) || diagonal_win?(marker)
   end
 
   def horizontal_win?(marker)
