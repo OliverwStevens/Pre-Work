@@ -10,4 +10,14 @@ class Board
     @grid.each { |row| puts row.join(" ") }
     puts (0...COLUMNS).to_a.join(" ")
   end
+
+  def play_piece(marker, column)
+    (ROWS - 1).downto(0) do |row|
+      if @grid[row][column] == "."
+        @grid[row][column] = marker
+        return true
+      end
+    end
+    false
+  end
 end
