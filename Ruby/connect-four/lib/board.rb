@@ -37,5 +37,16 @@ class Board
   end
 
   def diagonal_win?(marker)
+    (0..ROWS - 4).each do |row|
+      (0..COLUMNS - 4).each do |col|
+        return true if (0..3).all? { |i| @grid[row + i][col + i] == marker }
+      end
+    end
+    (3...ROWS).each do |row|
+      (0..COLUMNS - 4).each do |col|
+        return true if (0..3).all? { |i| @grid[row - i][col + i] == marker }
+      end
+    end
+    false
   end
 end

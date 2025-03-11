@@ -98,4 +98,65 @@ describe Board do
       expect(board.vertical_win?("x")).to eql(false)
     end
   end
+
+  describe "#diagonal_win?" do
+    it "returns false when the board is empty" do
+      board = Board.new
+      expect(board.diagonal_win?("x")).to eql(false)
+    end
+
+    it "returns false when there are pieces but no four in a row diagonally" do
+      board = Board.new
+      board.play_piece("x", 0)
+      board.play_piece("x", 1)
+      board.play_piece("x", 2)
+
+      expect(board.diagonal_win?("x")).to eql(false)
+    end
+
+    it "returns true when there are exactly four in a row diagonally (bottom-left to top-right)" do
+      board = Board.new
+      board.play_piece("x", 0)
+      board.play_piece("o", 1)
+      board.play_piece("x", 1)
+      board.play_piece("o", 2)
+      board.play_piece("o", 2)
+      board.play_piece("x", 2)
+      board.play_piece("o", 3)
+      board.play_piece("o", 3)
+      board.play_piece("o", 3)
+      board.play_piece("x", 3)
+
+      expect(board.diagonal_win?("x")).to eql(true)
+    end
+
+    it "returns true when there are exactly four in a row diagonally (top-left to bottom-right)" do
+      board = Board.new
+      board.play_piece("x", 3)
+      board.play_piece("o", 2)
+      board.play_piece("x", 2)
+      board.play_piece("o", 1)
+      board.play_piece("o", 1)
+      board.play_piece("x", 1)
+      board.play_piece("o", 0)
+      board.play_piece("o", 0)
+      board.play_piece("o", 0)
+      board.play_piece("x", 0)
+
+      expect(board.diagonal_win?("x")).to eql(true)
+    end
+
+    it "returns false if pieces are diagonally placed but interrupted by another symbol" do
+      board = Board.new
+      board.play_piece("x", 0)
+      board.play_piece("o", 1)
+      board.play_piece("x", 1)
+      board.play_piece("o", 2)
+      board.play_piece("o", 2)
+      board.play_piece("o", 2)
+      board.play_piece("x", 3)
+
+      expect(board.diagonal_win?("x")).to eql(false)
+    end
+  end
 end
