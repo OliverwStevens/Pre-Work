@@ -6,6 +6,7 @@ GEM
     ast (2.4.2)
     base64 (0.2.0)
     declarative (0.0.20)
+    diff-lcs (1.6.0)
     faraday (2.12.2)
       faraday-net_http (>= 2.0, < 3.5)
       json
@@ -60,6 +61,19 @@ GEM
       trailblazer-option (>= 0.1.1, < 0.2.0)
       uber (< 0.2.0)
     retriable (3.1.2)
+    rspec (3.13.0)
+      rspec-core (~> 3.13.0)
+      rspec-expectations (~> 3.13.0)
+      rspec-mocks (~> 3.13.0)
+    rspec-core (3.13.3)
+      rspec-support (~> 3.13.0)
+    rspec-expectations (3.13.3)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-mocks (3.13.2)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-support (3.13.2)
     rubocop (1.73.1)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
@@ -92,6 +106,7 @@ PLATFORMS
 
 DEPENDENCIES
   google-apis-civicinfo_v2 (~> 0.24.0)
+  rspec
   rubocop (~> 1.73, >= 1.73.1)
 
 BUNDLED WITH
