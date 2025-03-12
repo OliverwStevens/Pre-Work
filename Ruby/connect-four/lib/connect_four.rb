@@ -14,7 +14,16 @@ class Connect_Four
       @board.print_board
       puts "Player #{@current_player.marker}'s turn"
 
-      @board.play_piece(@current_player.marker, gets.chomp.to_i)
+      column = nil
+      loop do
+        print "Enter a column (0-#{Board::COLUMNS - 1}): "
+        column = gets.chomp.to_i
+        break if @board.valid_move?(column)
+
+        puts "Invalid move! Please choose a different column."
+      end
+
+      @board.play_piece(@current_player.marker, column)
 
       if @board.winning_move?(@current_player.marker)
         @board.print_board

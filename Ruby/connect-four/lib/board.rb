@@ -53,4 +53,8 @@ class Board
   def board_full?
     @grid.all? { |row| row.none?(".") }
   end
+
+  def valid_move?(column)
+    column.between?(0, COLUMNS - 1) && @grid[0][column] == "."
+  end
 end

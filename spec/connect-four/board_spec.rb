@@ -240,4 +240,27 @@ describe Board do
       expect(board.board_full?).to eql(true)
     end
   end
+
+  describe "#valid_move?" do
+    before(:each) do
+      @board = Board.new
+    end
+
+    it "returns true for an empty column within bounds" do
+      expect(@board.valid_move?(3)).to be true
+    end
+
+    it "returns false for a column index less than 0" do
+      expect(@board.valid_move?(-1)).to be false
+    end
+
+    it "returns false for a column index greater than max columns" do
+      expect(@board.valid_move?(Board::COLUMNS)).to be false
+    end
+
+    it "returns false for a full column" do
+      Board::ROWS.times { @board.play_piece("x", 2) }
+      expect(@board.valid_move?(2)).to be false
+    end
+  end
 end
