@@ -18,7 +18,7 @@ class Connect_Four
       loop do
         print "Enter a column (0-#{Board::COLUMNS - 1}): "
         input = gets.chomp
-        if input.match?(/^\d+$/) && input.to_i.between?(0, Board::COLUMNS - 1)
+        if input.match?(/^\d+$/)
           column = input.to_i
           break if @board.valid_move?(column)
         end
