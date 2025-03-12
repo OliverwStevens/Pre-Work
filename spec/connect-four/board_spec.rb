@@ -215,4 +215,29 @@ describe Board do
       expect(board.winning_move?("x")).to eql(false)
     end
   end
+
+  describe "#board_full?" do
+    it "returns false for an empty board" do
+      board = Board.new
+      expect(board.board_full?).to eql(false)
+    end
+
+    it "returns false for a partially filled board" do
+      board = Board.new
+      board.play_piece("x", 0) # Drop a piece in the first column
+      expect(board.board_full?).to eql(false)
+    end
+
+    it "returns true when the board is completely filled" do
+      board = Board.new
+      # Fill the board with 'x' and 'o'
+      (0...Board::COLUMNS).each do |col|
+        (0...Board::ROWS).each do
+          board.play_piece(%w[x o].sample, col) # Alternate pieces randomly
+        end
+      end
+
+      expect(board.board_full?).to eql(true)
+    end
+  end
 end

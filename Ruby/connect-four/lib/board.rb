@@ -49,4 +49,8 @@ class Board
     end
     false
   end
+
+  def board_full?
+    @grid.all? { |row| row.none?(".") }
+  end
 end
