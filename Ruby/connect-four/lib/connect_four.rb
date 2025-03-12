@@ -17,8 +17,11 @@ class Connect_Four
       column = nil
       loop do
         print "Enter a column (0-#{Board::COLUMNS - 1}): "
-        column = gets.chomp.to_i
-        break if @board.valid_move?(column)
+        input = gets.chomp
+        if input.match?(/^\d+$/) && input.to_i.between?(0, Board::COLUMNS - 1)
+          column = input.to_i
+          break if @board.valid_move?(column)
+        end
 
         puts "Invalid move! Please choose a different column."
       end
