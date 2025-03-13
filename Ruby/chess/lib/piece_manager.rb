@@ -2,6 +2,7 @@ require_relative "pawn"
 require_relative "rook"
 require_relative "knight"
 require_relative "bishop"
+require_relative "queen"
 class Piece_Manager
   pieces = []
   8.times do |num|
@@ -29,6 +30,10 @@ class Piece_Manager
   pieces.push(Bishop.new("white", [2, 0]))
   pieces.push(Bishop.new("black", [5, 7]))
   pieces.push(Bishop.new("black", [5, 7]))
+
+  # queens
+  pieces.push(Queen.new("white", [3, 0]))
+  pieces.push(Queen.new("black", [3, 7]))
 
   pieces.each { |piece| p [piece.color, piece.icon, piece.coords] }
 end
