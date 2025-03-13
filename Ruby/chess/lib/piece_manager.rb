@@ -42,6 +42,20 @@ class Piece_Manager
     @pieces.push(King.new("black", [4, 7]))
   end
 
+  def show_board
+    board = Array.new(8) { Array.new(8, ". ") }
+
+    @pieces.each do |piece|
+      x, y = piece.coords
+      board[y][x] = piece.icon
+    end
+
+    puts "  a b c d e f g h"
+    board.reverse.each_with_index do |row, index|
+      puts "#{8 - index} #{row.join}"
+    end
+  end
+
   def show_current_pieces
     @pieces.each { |piece| p [piece.color, piece.icon, piece.coords] }
   end
@@ -52,4 +66,4 @@ class Piece_Manager
 end
 
 piece_manager = Piece_Manager.new
-piece_manager.show_current_pieces
+piece_manager.show_board
