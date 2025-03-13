@@ -7,11 +7,11 @@ require_relative "pieces/king"
 class PieceManager
   def initialize
     @pieces = []
-    8.times do |num|
+    7.times do |num|
       pawn = Pawn.new("white", [num, 1])
       @pieces.push(pawn)
     end
-    8.times do |num|
+    7.times do |num|
       pawn = Pawn.new("black", [num, 6])
       @pieces.push(pawn)
     end
@@ -72,8 +72,14 @@ class PieceManager
     return puts "Invalid move: #{color} piece already at #{end_pos}" if target_piece && target_piece.color == color
 
     # Validate legal moves and checks here
+    valid_moves = piece.generate_valid_moves(@pieces)
+    p valid_moves
+    puts valid_moves.include? end_coords
+    return nil unless valid_moves.include? end_coords
+
     puts "Move from #{start_coords} to #{end_coords}"
     [start_coords, end_coords]
+    piece.coords = end_coords
   end
 
   def algebraic_to_index(pos)
