@@ -71,6 +71,7 @@ class PieceManager
     target_piece = @pieces.find { |p| p.coords == end_coords }
     return puts "Invalid move: #{color} piece already at #{end_pos}" if target_piece && target_piece.color == color
 
+    # Validate legal moves and checks here
     puts "Move from #{start_coords} to #{end_coords}"
     [start_coords, end_coords]
   end
