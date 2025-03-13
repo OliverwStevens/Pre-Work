@@ -4,7 +4,7 @@ require_relative "pieces/knight"
 require_relative "pieces/bishop"
 require_relative "pieces/queen"
 require_relative "pieces/king"
-class Piece_Manager
+class PieceManager
   def initialize
     @pieces = []
     8.times do |num|
@@ -56,13 +56,20 @@ class Piece_Manager
     end
   end
 
-  def input_handler(input)
+  def input_handler(color, input)
     start_pos, end_pos = input.split
 
     start_coords = algebraic_to_index(start_pos)
     end_coords = algebraic_to_index(end_pos)
 
     return unless start_coords && end_coords
+
+    piece = @pieces.find { |p| p.coords == start_coords && p.color == color }
+
+    return puts "Invalid move: No #{color} piece at #{start_pos}" unless piece
+
+    target_piece = @pieces.find { |p| p.coords == end_coords }
+    return puts "Invalid move: #{color} piece already at #{end_pos}" if target_piece && target_piece.color == color
 
     puts "Move from #{start_coords} to #{end_coords}"
     [start_coords, end_coords]
@@ -88,6 +95,6 @@ class Piece_Manager
   end
 end
 
-piece_manager = Piece_Manager.new
-piece_manager.show_board
-piece_manager.input_handler(gets.chomp)
+# piece_manager = PieceManager.new
+# piece_manager.show_board
+# piece_manager.input_handler("white", gets.chomp)

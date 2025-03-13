@@ -1,6 +1,6 @@
 require_relative "piece_manager"
 class Game
   def initialize
-    @piece_manager = Piece_Manager.new
+    @piece_manager = PieceManager.new
   end
 end
