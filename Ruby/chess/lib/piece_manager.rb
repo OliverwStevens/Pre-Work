@@ -56,6 +56,28 @@ class Piece_Manager
     end
   end
 
+  def input_handler(input)
+    start_pos, end_pos = input.split
+
+    start_coords = algebraic_to_index(start_pos)
+    end_coords = algebraic_to_index(end_pos)
+
+    return unless start_coords && end_coords
+
+    puts "Move from #{start_coords} to #{end_coords}"
+    [start_coords, end_coords]
+  end
+
+  def algebraic_to_index(pos)
+    return nil if pos.nil?
+    return nil unless pos.match?(/^[a-h][1-8]$/)
+
+    file = pos[0].ord - "a".ord
+    rank = pos[1].to_i - 1
+
+    [file, rank]
+  end
+
   # utility methods
   def show_current_pieces
     @pieces.each { |piece| p [piece.color, piece.icon, piece.coords] }
@@ -68,3 +90,4 @@ end
 
 piece_manager = Piece_Manager.new
 piece_manager.show_board
+piece_manager.input_handler(gets.chomp)
