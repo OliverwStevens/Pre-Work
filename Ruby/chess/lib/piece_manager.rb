@@ -4,6 +4,7 @@ require_relative "pieces/knight"
 require_relative "pieces/bishop"
 require_relative "pieces/queen"
 require_relative "pieces/king"
+
 class PieceManager
   def initialize
     @pieces = []
