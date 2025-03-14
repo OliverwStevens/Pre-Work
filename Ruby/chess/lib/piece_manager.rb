@@ -7,11 +7,11 @@ require_relative "pieces/king"
 class PieceManager
   def initialize
     @pieces = []
-    7.times do |num|
+    1.times do |num|
       pawn = Pawn.new("white", [num, 1])
       @pieces.push(pawn)
     end
-    7.times do |num|
+    1.times do |num|
       pawn = Pawn.new("black", [num, 6])
       @pieces.push(pawn)
     end
@@ -74,8 +74,12 @@ class PieceManager
     # Validate legal moves and checks here
     valid_moves = piece.generate_valid_moves(@pieces)
     p valid_moves
-    puts valid_moves.include? end_coords
+    return "Hello your moves are nil" if valid_moves.nil?
     return nil unless valid_moves.include? end_coords
+
+    enemy_piece = @pieces.find { |p| p.coords == end_coords }
+
+    @pieces.delete(enemy_piece) if enemy_piece
 
     puts "Move from #{start_coords} to #{end_coords}"
     [start_coords, end_coords]
