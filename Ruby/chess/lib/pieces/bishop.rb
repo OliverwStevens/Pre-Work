@@ -6,12 +6,11 @@ class Bishop < Piece
   end
 
   def generate_valid_moves(pieces)
-    puts "Hello I am a Bishop"
     moves = []
     row = coords[1]
     col = coords[0]
 
-    # Define a helper lambda to process moves in a given diagonal direction
+    # Define a helper lambda to process moves
     process_move = lambda do |col_step, row_step|
       c = col + col_step
       r = row + row_step
@@ -34,7 +33,6 @@ class Bishop < Piece
       end
     end
 
-    # Diagonal directions: top-left, top-right, bottom-left, bottom-right
     process_move.call(-1, -1)  # Top-left
     process_move.call(1, -1)   # Top-right
     process_move.call(-1, 1)   # Bottom-left
