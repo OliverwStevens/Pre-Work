@@ -27,7 +27,6 @@ class PieceManager
     @pieces.push(Knight.new("white", [6, 0]))
     @pieces.push(Knight.new("black", [1, 7]))
     @pieces.push(Knight.new("black", [6, 7]))
-
     # bishops
     @pieces.push(Bishop.new("white", [2, 0]))
     @pieces.push(Bishop.new("white", [5, 0]))
