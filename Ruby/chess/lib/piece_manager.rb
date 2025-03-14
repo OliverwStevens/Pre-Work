@@ -7,11 +7,11 @@ require_relative "pieces/king"
 class PieceManager
   def initialize
     @pieces = []
-    1.times do |num|
+    8.times do |num|
       pawn = Pawn.new("white", [num, 1])
       @pieces.push(pawn)
     end
-    1.times do |num|
+    8.times do |num|
       pawn = Pawn.new("black", [num, 6])
       @pieces.push(pawn)
     end
