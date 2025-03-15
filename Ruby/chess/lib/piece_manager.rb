@@ -57,6 +57,14 @@ class PieceManager
   end
 
   def input_handler(color, input)
+    # Handle special castling notation if provided
+    if %w[O-O 0-0].include?(input)
+      return handle_castling(color, "kingside")
+    elsif ["O-O-O", "0-0-0"].include?(input)
+      return handle_castling(color, "queenside")
+    end
+
+    # Regular move handling
     start_pos, end_pos = input.split
 
     start_coords = algebraic_to_index(start_pos)
@@ -73,17 +81,100 @@ class PieceManager
 
     # Validate legal moves and checks here
     valid_moves = piece.generate_valid_moves(@pieces)
-    p valid_moves
     return "Hello your moves are nil" if valid_moves.nil?
     return nil unless valid_moves.include? end_coords
 
-    enemy_piece = @pieces.find { |p| p.coords == end_coords }
+    # Handle castling if the piece is a king and the move is a castling move
+    if piece.is_a?(King) && !piece.has_moved && (end_coords[0] == start_coords[0] + 2 || end_coords[0] == start_coords[0] - 2)
+      perform_castling(piece, end_coords)
+    else
+      # Handle normal move including capture
+      enemy_piece = @pieces.find { |p| p.coords == end_coords }
+      @pieces.delete(enemy_piece) if enemy_piece
 
-    @pieces.delete(enemy_piece) if enemy_piece
+      piece.coords = end_coords
+      piece.has_moved = true if piece.respond_to?(:has_moved=)
+    end
 
     puts "Move from #{start_coords} to #{end_coords}"
     [start_coords, end_coords]
-    piece.coords = end_coords
+  end
+
+  def handle_castling(color, side)
+    # Find the king
+    king = @pieces.find { |p| p.is_a?(King) && p.color == color }
+    return puts "Invalid move: King not found" unless king
+
+    # Determine the king's starting and ending position
+    row = color == "white" ? 0 : 7
+    start_coords = [4, row]
+
+    return puts "Invalid move: King not in starting position" unless king.coords == start_coords
+    return puts "Invalid move: King has already moved" if king.has_moved
+
+    return puts "Invalid move: Cannot castle while in check" if king.in_check?(@pieces)
+
+    if side == "kingside"
+      # Find the kingside rook
+      rook = @pieces.find { |p| p.is_a?(Rook) && p.color == color && p.coords == [7, row] }
+      return puts "Invalid move: Kingside rook not found or has moved" unless rook && !rook.has_moved
+
+      return puts "Invalid move: Path not clear for castling" if @pieces.any? do |p|
+        [[5, row], [6, row]].include?(p.coords)
+      end
+
+      danger_squares = king.get_danger_squares(@pieces, color)
+      return puts "Invalid move: Cannot castle through or into check" if danger_squares.include?([5,
+                                                                                                  row]) || danger_squares.include?([
+                                                                                                                                     6, row
+                                                                                                                                   ])
+
+      king.coords = [6, row]
+      king.has_moved = true
+      rook.coords = [5, row]
+      rook.has_moved = true
+
+      puts "Kingside castling performed"
+    else
+      rook = @pieces.find { |p| p.is_a?(Rook) && p.color == color && p.coords == [0, row] }
+      return puts "Invalid move: Queenside rook not found or has moved" unless rook && !rook.has_moved
+
+      return puts "Invalid move: Path not clear for castling" if @pieces.any? do |p|
+        [[1, row], [2, row], [3, row]].include?(p.coords)
+      end
+
+      danger_squares = king.get_danger_squares(@pieces, color)
+      return puts "Invalid move: Cannot castle through or into check" if danger_squares.include?([2,
+                                                                                                  row]) || danger_squares.include?([
+                                                                                                                                     3, row
+                                                                                                                                   ])
+
+      king.coords = [2, row]
+      king.has_moved = true
+      rook.coords = [3, row]
+      rook.has_moved = true
+
+      puts "Queenside castling performed"
+    end
+
+    [king.coords, rook.coords]
+  end
+
+  def perform_castling(king, end_coords)
+    row = end_coords[1]
+
+    if end_coords[0] == 6
+      rook = @pieces.find { |p| p.is_a?(Rook) && p.color == king.color && p.coords == [7, row] }
+      rook.coords = [5, row]
+      rook.has_moved = true
+    elsif end_coords[0] == 2
+      rook = @pieces.find { |p| p.is_a?(Rook) && p.color == king.color && p.coords == [0, row] }
+      rook.coords = [3, row]
+      rook.has_moved = true
+    end
+
+    king.coords = end_coords
+    king.has_moved = true
   end
 
   def algebraic_to_index(pos)
@@ -105,7 +196,3 @@ class PieceManager
     puts @pieces.length
   end
 end
-
-# piece_manager = PieceManager.new
-# piece_manager.show_board
-# piece_manager.input_handler("white", gets.chomp)

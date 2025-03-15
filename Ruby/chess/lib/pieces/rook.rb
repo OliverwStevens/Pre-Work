@@ -1,10 +1,13 @@
 require_relative "piece"
 class Rook < Piece
+  attr_accessor :has_moved
+
   include PieceMovement
 
   def initialize(color, coords)
     icon = color == "white" ? "♜ " : "♖ "
     super(icon, color, coords)
+    @has_moved = false
   end
 
   # rook moves
