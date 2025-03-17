@@ -6,8 +6,17 @@ require_relative "pieces/queen"
 require_relative "pieces/king"
 
 class PieceManager
-  def initialize
+  def initialize(state = nil)
     @pieces = []
+
+    if state.nil?
+      add_pieces_to_board
+    else
+
+    end
+  end
+
+  def add_pieces_to_board
     8.times do |num|
       pawn = Pawn.new("white", [num, 1])
       @pieces.push(pawn)
