@@ -1,0 +1,272 @@
+{
+  "pieces": [
+    {
+      "type": "Pawn",
+      "color": "white",
+      "coords": [
+        0,
+        1
+      ]
+    },
+    {
+      "type": "Pawn",
+      "color": "white",
+      "coords": [
+        1,
+        1
+      ]
+    },
+    {
+      "type": "Pawn",
+      "color": "white",
+      "coords": [
+        2,
+        1
+      ]
+    },
+    {
+      "type": "Pawn",
+      "color": "white",
+      "coords": [
+        3,
+        1
+      ]
+    },
+    {
+      "type": "Pawn",
+      "color": "white",
+      "coords": [
+        4,
+        3
+      ]
+    },
+    {
+      "type": "Pawn",
+      "color": "white",
+      "coords": [
+        5,
+        1
+      ]
+    },
+    {
+      "type": "Pawn",
+      "color": "white",
+      "coords": [
+        6,
+        1
+      ]
+    },
+    {
+      "type": "Pawn",
+      "color": "white",
+      "coords": [
+        7,
+        1
+      ]
+    },
+    {
+      "type": "Pawn",
+      "color": "black",
+      "coords": [
+        0,
+        6
+      ]
+    },
+    {
+      "type": "Pawn",
+      "color": "black",
+      "coords": [
+        1,
+        6
+      ]
+    },
+    {
+      "type": "Pawn",
+      "color": "black",
+      "coords": [
+        2,
+        6
+      ]
+    },
+    {
+      "type": "Pawn",
+      "color": "black",
+      "coords": [
+        3,
+        6
+      ]
+    },
+    {
+      "type": "Pawn",
+      "color": "black",
+      "coords": [
+        4,
+        6
+      ]
+    },
+    {
+      "type": "Pawn",
+      "color": "black",
+      "coords": [
+        5,
+        6
+      ]
+    },
+    {
+      "type": "Pawn",
+      "color": "black",
+      "coords": [
+        6,
+        6
+      ]
+    },
+    {
+      "type": "Pawn",
+      "color": "black",
+      "coords": [
+        7,
+        6
+      ]
+    },
+    {
+      "type": "Rook",
+      "color": "white",
+      "coords": [
+        0,
+        0
+      ]
+    },
+    {
+      "type": "Rook",
+      "color": "white",
+      "coords": [
+        7,
+        0
+      ]
+    },
+    {
+      "type": "Rook",
+      "color": "black",
+      "coords": [
+        0,
+        7
+      ]
+    },
+    {
+      "type": "Rook",
+      "color": "black",
+      "coords": [
+        7,
+        7
+      ]
+    },
+    {
+      "type": "Knight",
+      "color": "white",
+      "coords": [
+        1,
+        0
+      ]
+    },
+    {
+      "type": "Knight",
+      "color": "white",
+      "coords": [
+        6,
+        0
+      ]
+    },
+    {
+      "type": "Knight",
+      "color": "black",
+      "coords": [
+        1,
+        7
+      ]
+    },
+    {
+      "type": "Knight",
+      "color": "black",
+      "coords": [
+        6,
+        7
+      ]
+    },
+    {
+      "type": "Bishop",
+      "color": "white",
+      "coords": [
+        2,
+        0
+      ]
+    },
+    {
+      "type": "Bishop",
+      "color": "white",
+      "coords": [
+        5,
+        0
+      ]
+    },
+    {
+      "type": "Bishop",
+      "color": "black",
+      "coords": [
+        2,
+        7
+      ]
+    },
+    {
+      "type": "Bishop",
+      "color": "black",
+      "coords": [
+        5,
+        7
+      ]
+    },
+    {
+      "type": "Queen",
+      "color": "white",
+      "coords": [
+        3,
+        0
+      ]
+    },
+    {
+      "type": "Queen",
+      "color": "black",
+      "coords": [
+        3,
+        7
+      ]
+    },
+    {
+      "type": "King",
+      "color": "white",
+      "coords": [
+        4,
+        0
+      ]
+    },
+    {
+      "type": "King",
+      "color": "black",
+      "coords": [
+        4,
+        7
+      ]
+    }
+  ],
+  "color": "black",
+  "last_move": [
+    "#<Pawn:0x0000000100c87098>",
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      3
+    ]
+  ]
+}

@@ -6,14 +6,14 @@ require_relative "pieces/queen"
 require_relative "pieces/king"
 
 class PieceManager
-  def initialize(state = nil)
-    @pieces = []
+  attr_accessor :pieces
 
-    if state.nil?
-      add_pieces_to_board
-    else
+  def initialize(pieces = [])
+    @pieces = pieces
 
-    end
+    return unless pieces == []
+
+    add_pieces_to_board
   end
 
   def add_pieces_to_board
@@ -87,6 +87,10 @@ class PieceManager
     valid_moves = piece.generate_valid_moves(@pieces, last_move)
     return puts "Invalid move: Move not allowed" unless valid_moves.include?(end_coords)
 
+    if would_expose_king_to_check?(piece, end_coords, color)
+      return puts "Invalid move: This would put your king in check"
+    end
+
     # Handle en passant
     if piece.is_a?(Pawn) && last_move && last_move[0].is_a?(Pawn) && (last_move[1][0] == end_coords[0] && last_move[2][1] == start_coords[1])
       captured_pawn = @pieces.find { |p| p.coords == last_move[2] }
@@ -101,8 +105,8 @@ class PieceManager
     piece.just_moved_two = (start_coords[1] - end_coords[1]).abs == 2 if piece.is_a?(Pawn)
 
     # Update last move
-    last_move.replace([piece, start_coords, end_coords]) # Modify in-place
-
+    # Modify in-place
+    last_move.replace([piece, start_coords, end_coords])
     # Handle pawn promotion
     if piece.is_a?(Pawn) && [0, 7].include?(end_coords[1])
       puts "Pawn promotion! Choose a piece (Q for Queen, R for Rook, B for Bishop, N for Knight):"
@@ -269,5 +273,20 @@ class PieceManager
         still_in_check
       end
     end
+  end
+
+  def would_expose_king_to_check?(piece, destination, color)
+    original_coords = piece.coords
+    captured_piece = @pieces.find { |p| p.coords == destination }
+
+    piece.coords = destination
+    @pieces.delete(captured_piece) if captured_piece
+
+    king_exposed = king_in_check?(color)
+
+    piece.coords = original_coords
+    @pieces.push(captured_piece) if captured_piece
+
+    king_exposed
   end
 end
