@@ -12,7 +12,7 @@ class PieceManager
       pawn = Pawn.new("white", [num, 1])
       @pieces.push(pawn)
     end
-    1.times do |num|
+    8.times do |num|
       pawn = Pawn.new("black", [num, 6])
       @pieces.push(pawn)
     end
@@ -25,7 +25,7 @@ class PieceManager
     # knights
     @pieces.push(Knight.new("white", [1, 0]))
     @pieces.push(Knight.new("white", [6, 0]))
-    # @pieces.push(Knight.new("black", [1, 7]))
+    @pieces.push(Knight.new("black", [1, 7]))
     @pieces.push(Knight.new("black", [6, 7]))
     # bishops
     @pieces.push(Bishop.new("white", [2, 0]))
@@ -66,59 +66,68 @@ class PieceManager
 
     # Regular move handling
     start_pos, end_pos = input.split
-
     start_coords = algebraic_to_index(start_pos)
     end_coords = algebraic_to_index(end_pos)
-
     return unless start_coords && end_coords
 
     piece = @pieces.find { |p| p.coords == start_coords && p.color == color }
-
     return puts "Invalid move: No #{color} piece at #{start_pos}" unless piece
 
     target_piece = @pieces.find { |p| p.coords == end_coords }
     return puts "Invalid move: #{color} piece already at #{end_pos}" if target_piece && target_piece.color == color
 
-    # Validate legal moves and checks here
+    # Validate legal moves
     valid_moves = piece.generate_valid_moves(@pieces)
-    return "Hello your moves are nil" if valid_moves.nil?
-    return nil unless valid_moves.include? end_coords
+    return puts "Invalid move: Move not allowed" if valid_moves.nil? || !valid_moves.include?(end_coords)
 
-    # Handle castling if the piece is a king and the move is a castling move
-    if piece.is_a?(King) && !piece.has_moved && (end_coords[0] == start_coords[0] + 2 || end_coords[0] == start_coords[0] - 2)
-      perform_castling(piece, end_coords)
-    else
-      # Handle normal move including capture
-      enemy_piece = @pieces.find { |p| p.coords == end_coords }
-      @pieces.delete(enemy_piece) if enemy_piece
+    # Simulate move to check if it puts the king in check
+    original_coords = piece.coords
+    captured_piece = @pieces.find { |p| p.coords == end_coords }
 
-      piece.coords = end_coords
-      piece.has_moved = true if piece.respond_to?(:has_moved=)
+    piece.coords = end_coords
+    @pieces.delete(captured_piece) if captured_piece
 
-      # handle pawn promotion
-      # handle pawn promotion with user input
-      if piece.is_a?(Pawn) && [0, 7].include?(end_coords[1])
-        puts "Pawn promotion! Choose a piece (Q for Queen, R for Rook, B for Bishop, N for Knight):"
-        choice = gets.chomp.upcase
-
-        @pieces.delete(piece)
-
-        new_piece = case choice
-                    when "Q" then Queen.new(color, end_coords)
-                    when "R" then Rook.new(color, end_coords)
-                    when "B" then Bishop.new(color, end_coords)
-                    when "N" then Knight.new(color, end_coords)
-                    else
-                      puts "Invalid choice, defaulting to Queen."
-                      Queen.new(color, end_coords)
-                    end
-
-        @pieces.push(new_piece)
-      end
-
+    if king_in_check?(color)
+      # Undo move
+      piece.coords = original_coords
+      @pieces.push(captured_piece) if captured_piece
+      return puts "Invalid move: Your king would be in check!"
     end
 
-    puts "Move from #{start_coords} to #{end_coords}"
+    piece.has_moved = true if piece.respond_to?(:has_moved=)
+
+    # Handle pawn promotion
+    if piece.is_a?(Pawn) && [0, 7].include?(end_coords[1])
+      puts "Pawn promotion! Choose a piece (Q for Queen, R for Rook, B for Bishop, N for Knight):"
+      choice = gets.chomp.upcase
+
+      @pieces.delete(piece)
+
+      new_piece = case choice
+                  when "Q" then Queen.new(color, end_coords)
+                  when "R" then Rook.new(color, end_coords)
+                  when "B" then Bishop.new(color, end_coords)
+                  when "N" then Knight.new(color, end_coords)
+                  else
+                    puts "Invalid choice, defaulting to Queen."
+                    Queen.new(color, end_coords)
+                  end
+
+      @pieces.push(new_piece)
+    end
+
+    # Check if opponent is now in check
+    opponent_color = color == "white" ? "black" : "white"
+
+    if king_in_check?(opponent_color)
+      if checkmate?(opponent_color)
+        puts "Checkmate! #{color.capitalize} wins!"
+        exit
+      else
+        puts "#{opponent_color.capitalize} is in check!"
+      end
+    end
+
     [start_coords, end_coords]
   end
 
@@ -216,5 +225,43 @@ class PieceManager
 
   def piece_count
     puts @pieces.length
+  end
+
+  def king_in_check?(color)
+    king = @pieces.find { |p| p.is_a?(King) && p.color == color }
+    return false unless king
+
+    @pieces.any? { |p| p.color != color && p.generate_valid_moves(@pieces).include?(king.coords) }
+  end
+
+  def checkmate?(color)
+    king = @pieces.find { |p| p.is_a?(King) && p.color == color }
+    return false unless king
+
+    # If the king has no legal moves and is in check, it's checkmate
+    return true if king_in_check?(color) && no_legal_moves?(color)
+
+    false
+  end
+
+  def no_legal_moves?(color)
+    @pieces.select { |p| p.color == color }.all? do |piece|
+      piece.generate_valid_moves(@pieces).all? do |move|
+        # Simulate each move and check if it gets the king out of check
+        original_coords = piece.coords
+        captured_piece = @pieces.find { |p| p.coords == move }
+
+        piece.coords = move
+        @pieces.delete(captured_piece) if captured_piece
+
+        still_in_check = king_in_check?(color)
+
+        # Undo move
+        piece.coords = original_coords
+        @pieces.push(captured_piece) if captured_piece
+
+        still_in_check
+      end
+    end
   end
 end
