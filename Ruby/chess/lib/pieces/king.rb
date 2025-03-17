@@ -8,7 +8,7 @@ class King < Piece
     @has_moved = false # Track if the king has moved (needed for castling)
   end
 
-  def generate_valid_moves(pieces)
+  def generate_valid_moves(pieces, _last_move = nil)
     moves = []
     row, col = coords
 

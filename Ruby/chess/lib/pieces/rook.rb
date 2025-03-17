@@ -11,7 +11,7 @@ class Rook < Piece
   end
 
   # rook moves
-  def generate_valid_moves(pieces)
+  def generate_valid_moves(pieces, _last_move = nil)
     rook_movement(pieces)
   end
 

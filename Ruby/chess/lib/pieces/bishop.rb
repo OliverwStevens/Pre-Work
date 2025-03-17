@@ -7,7 +7,7 @@ class Bishop < Piece
     super(icon, color, coords)
   end
 
-  def generate_valid_moves(pieces)
+  def generate_valid_moves(pieces, _last_move = nil)
     bishop_movement(pieces)
   end
 end

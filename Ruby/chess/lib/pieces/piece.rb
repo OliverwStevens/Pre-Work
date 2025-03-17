@@ -114,7 +114,7 @@ class Piece
   end
 
   # def legal_moves
-  def generate_valid_moves(pieces)
+  def generate_valid_moves(pieces, _last_move = nil)
     puts "Hello, your legal moves would appear here"
     nil
   end

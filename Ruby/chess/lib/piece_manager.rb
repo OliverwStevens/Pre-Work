@@ -56,15 +56,14 @@ class PieceManager
     end
   end
 
-  def input_handler(color, input)
-    # Handle special castling notation if provided
+  def input_handler(color, input, last_move)
+    # Handle special castling notation
     if %w[O-O 0-0].include?(input)
       return handle_castling(color, "kingside")
     elsif ["O-O-O", "0-0-0"].include?(input)
       return handle_castling(color, "queenside")
     end
 
-    # Regular move handling
     start_pos, end_pos = input.split
     start_coords = algebraic_to_index(start_pos)
     end_coords = algebraic_to_index(end_pos)
@@ -76,25 +75,24 @@ class PieceManager
     target_piece = @pieces.find { |p| p.coords == end_coords }
     return puts "Invalid move: #{color} piece already at #{end_pos}" if target_piece && target_piece.color == color
 
-    # Validate legal moves
-    valid_moves = piece.generate_valid_moves(@pieces)
-    return puts "Invalid move: Move not allowed" if valid_moves.nil? || !valid_moves.include?(end_coords)
+    valid_moves = piece.generate_valid_moves(@pieces, last_move)
+    return puts "Invalid move: Move not allowed" unless valid_moves.include?(end_coords)
 
-    # Simulate move to check if it puts the king in check
-    original_coords = piece.coords
-    captured_piece = @pieces.find { |p| p.coords == end_coords }
-
-    piece.coords = end_coords
-    @pieces.delete(captured_piece) if captured_piece
-
-    if king_in_check?(color)
-      # Undo move
-      piece.coords = original_coords
-      @pieces.push(captured_piece) if captured_piece
-      return puts "Invalid move: Your king would be in check!"
+    # Handle en passant
+    if piece.is_a?(Pawn) && last_move && last_move[0].is_a?(Pawn) && (last_move[1][0] == end_coords[0] && last_move[2][1] == start_coords[1])
+      captured_pawn = @pieces.find { |p| p.coords == last_move[2] }
+      @pieces.delete(captured_pawn) if captured_pawn
     end
 
+    # Execute move
+    piece.coords = end_coords
     piece.has_moved = true if piece.respond_to?(:has_moved=)
+
+    # Track pawns that just moved two squares
+    piece.just_moved_two = (start_coords[1] - end_coords[1]).abs == 2 if piece.is_a?(Pawn)
+
+    # Update last move
+    last_move.replace([piece, start_coords, end_coords]) # Modify in-place
 
     # Handle pawn promotion
     if piece.is_a?(Pawn) && [0, 7].include?(end_coords[1])
@@ -116,9 +114,8 @@ class PieceManager
       @pieces.push(new_piece)
     end
 
-    # Check if opponent is now in check
+    # Check for check and checkmate
     opponent_color = color == "white" ? "black" : "white"
-
     if king_in_check?(opponent_color)
       if checkmate?(opponent_color)
         puts "Checkmate! #{color.capitalize} wins!"
