@@ -12,7 +12,7 @@ class PieceManager
       pawn = Pawn.new("white", [num, 1])
       @pieces.push(pawn)
     end
-    8.times do |num|
+    1.times do |num|
       pawn = Pawn.new("black", [num, 6])
       @pieces.push(pawn)
     end
@@ -25,7 +25,7 @@ class PieceManager
     # knights
     @pieces.push(Knight.new("white", [1, 0]))
     @pieces.push(Knight.new("white", [6, 0]))
-    @pieces.push(Knight.new("black", [1, 7]))
+    # @pieces.push(Knight.new("black", [1, 7]))
     @pieces.push(Knight.new("black", [6, 7]))
     # bishops
     @pieces.push(Bishop.new("white", [2, 0]))
@@ -94,6 +94,28 @@ class PieceManager
 
       piece.coords = end_coords
       piece.has_moved = true if piece.respond_to?(:has_moved=)
+
+      # handle pawn promotion
+      # handle pawn promotion with user input
+      if piece.is_a?(Pawn) && [0, 7].include?(end_coords[1])
+        puts "Pawn promotion! Choose a piece (Q for Queen, R for Rook, B for Bishop, N for Knight):"
+        choice = gets.chomp.upcase
+
+        @pieces.delete(piece)
+
+        new_piece = case choice
+                    when "Q" then Queen.new(color, end_coords)
+                    when "R" then Rook.new(color, end_coords)
+                    when "B" then Bishop.new(color, end_coords)
+                    when "N" then Knight.new(color, end_coords)
+                    else
+                      puts "Invalid choice, defaulting to Queen."
+                      Queen.new(color, end_coords)
+                    end
+
+        @pieces.push(new_piece)
+      end
+
     end
 
     puts "Move from #{start_coords} to #{end_coords}"

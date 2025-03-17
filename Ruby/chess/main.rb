@@ -13,7 +13,8 @@ def start_game(piece_manager, color = "white")
     move = piece_manager.input_handler(color, input)
     next unless move
 
-    color = color == "white" ? "black" : "white"
+    # black was first here, I edited this to make testing it faster
+    color = color == "white" ? "white" : "white"
   end
 end
 
