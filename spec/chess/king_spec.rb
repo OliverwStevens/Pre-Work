@@ -171,26 +171,6 @@ RSpec.describe King do
         expect(castling_moves).to be_empty
       end
     end
-
-    context "#perform_castling" do
-      xit "correctly moves the king and rook for kingside castling" do
-        white_king.perform_castling([0, 6], pieces)
-
-        expect(white_king.coords).to eq([0, 6])
-        expect(white_king.has_moved).to be true
-        expect(white_kingside_rook.coords).to eq([0, 5])
-        expect(white_kingside_rook.has_moved).to be true
-      end
-
-      xit "correctly moves the king and rook for queenside castling" do
-        white_king.perform_castling([0, 2], pieces)
-
-        expect(white_king.coords).to eq([0, 2])
-        expect(white_king.has_moved).to be true
-        expect(white_queenside_rook.coords).to eq([0, 3])
-        expect(white_queenside_rook.has_moved).to be true
-      end
-    end
   end
 
   describe "#get_danger_squares" do
