@@ -85,7 +85,7 @@
       "color": "black",
       "coords": [
         2,
-        6
+        4
       ]
     },
     {
@@ -257,16 +257,22 @@
       ]
     }
   ],
-  "color": "black",
+  "color": "white",
   "last_move": [
-    "#<Pawn:0x0000000100c87098>",
+    "#<Pawn:0x00000001004155b8>",
     [
-      4,
-      1
+      2,
+      6
     ],
     [
-      4,
-      3
+      2,
+      4
     ]
-  ]
+  ],
+  "move_counter": 1,
+  "halfmove_clock": 0,
+  "position_history": {
+    "Bb27|Bb57|Bw20|Bw50|Kb17|Kb47|Kb67|Kw10|Kw40|Kw60|Pb06|Pb16|Pb26|Pb36|Pb46|Pb56|Pb66|Pb76|Pw01|Pw11|Pw21|Pw31|Pw43|Pw51|Pw61|Pw71|Qb37|Qw30|Rb07|Rb77|Rw00|Rw70|white1black1white001white701black071black771": 1,
+    "Bb27|Bb57|Bw20|Bw50|Kb17|Kb47|Kb67|Kw10|Kw40|Kw60|Pb06|Pb16|Pb24|Pb36|Pb46|Pb56|Pb66|Pb76|Pw01|Pw11|Pw21|Pw31|Pw43|Pw51|Pw61|Pw71|Qb37|Qw30|Rb07|Rb77|Rw00|Rw70|white1black1white001white701black071black771": 1
+  }
 }

@@ -7,14 +7,17 @@ require_relative "lib/pieces/bishop"
 require_relative "lib/pieces/queen"
 require_relative "lib/pieces/king"
 
-def save_game(pieces, color, last_move)
+def save_game(pieces, color, last_move, move_counter, halfmove_clock, position_history)
   puts "Name your game:"
   file_name = "./Ruby/chess/lib/games/#{gets.chomp}.json"
 
   game_state = {
     pieces: pieces.map { |piece| { type: piece.class.name, color: piece.color, coords: piece.coords } },
     color: color,
-    last_move: last_move
+    last_move: last_move,
+    move_counter: move_counter,
+    halfmove_clock: halfmove_clock,
+    position_history: position_history
   }
 
   File.write(file_name, JSON.pretty_generate(game_state))
@@ -36,6 +39,9 @@ def load_game(file_name)
   end
 
   piece_manager = PieceManager.new(pieces)
+  piece_manager.move_counter = game_state["move_counter"]
+  piece_manager.halfmove_clock = game_state["halfmove_clock"]
+  piece_manager.position_history = game_state["position_history"]
   start_game(piece_manager, game_state["color"], game_state["last_move"])
 end
 
@@ -46,7 +52,8 @@ def start_game(piece_manager, color = "white", last_move = [])
     input = gets.chomp.downcase
 
     if input == "/s"
-      save_game(piece_manager.pieces, color, last_move)
+      save_game(piece_manager.pieces, color, last_move, piece_manager.move_counter, piece_manager.halfmove_clock,
+                piece_manager.position_history)
       break
     end
 

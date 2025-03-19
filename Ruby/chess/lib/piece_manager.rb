@@ -6,10 +6,13 @@ require_relative "pieces/queen"
 require_relative "pieces/king"
 
 class PieceManager
-  attr_accessor :pieces
+  attr_accessor :pieces, :move_counter, :halfmove_clock, :position_history
 
-  def initialize(pieces = [])
+  def initialize(pieces = [], move_counter = 0, halfmove_clock = 0, position_history = {})
     @pieces = pieces
+    @move_counter = move_counter
+    @halfmove_clock = halfmove_clock # For 50-move rule
+    @position_history = position_history # For threefold repetition
 
     return unless pieces == []
 
@@ -66,6 +69,17 @@ class PieceManager
   end
 
   def input_handler(color, input, last_move)
+    # Handle claiming a draw
+    if input.downcase == "draw"
+      if can_claim_draw?
+        puts "Draw claimed and accepted."
+        exit
+      else
+        puts "Cannot claim draw at this time."
+        return nil
+      end
+    end
+
     # Handle special castling notation
     if %w[O-O 0-0].include?(input)
       return handle_castling(color, "kingside")
@@ -91,15 +105,24 @@ class PieceManager
       return puts "Invalid move: This would put your king in check"
     end
 
+    # Check if it's a capture or pawn move for halfmove clock
+    is_capture = !target_piece.nil?
+    is_pawn_move = piece.is_a?(Pawn)
+
     # Handle en passant
     if piece.is_a?(Pawn) && last_move && last_move[0].is_a?(Pawn) && (last_move[1][0] == end_coords[0] && last_move[2][1] == start_coords[1])
       captured_pawn = @pieces.find { |p| p.coords == last_move[2] }
       @pieces.delete(captured_pawn) if captured_pawn
+      is_capture = true
     end
 
     # Execute move
+    original_coords = piece.coords.dup
     piece.coords = end_coords
     piece.has_moved = true if piece.respond_to?(:has_moved=)
+
+    # Handle captures
+    @pieces.delete(target_piece) if target_piece
 
     # Track pawns that just moved two squares
     piece.just_moved_two = (start_coords[1] - end_coords[1]).abs == 2 if piece.is_a?(Pawn)
@@ -107,6 +130,19 @@ class PieceManager
     # Update last move
     # Modify in-place
     last_move.replace([piece, start_coords, end_coords])
+
+    # Update halfmove clock
+    if is_capture || is_pawn_move
+      @halfmove_clock = 0
+    else
+      @halfmove_clock += 1
+    end
+
+    # Update move counter
+    @move_counter += 1 if color == "black"
+    position_key = generate_position_key
+    @position_history[position_key] = (@position_history[position_key] || 0) + 1
+
     # Handle pawn promotion
     if piece.is_a?(Pawn) && [0, 7].include?(end_coords[1])
       puts "Pawn promotion! Choose a piece (Q for Queen, R for Rook, B for Bishop, N for Knight):"
@@ -129,6 +165,7 @@ class PieceManager
 
     # Check for check and checkmate
     opponent_color = color == "white" ? "black" : "white"
+
     if king_in_check?(opponent_color)
       if checkmate?(opponent_color)
         puts "Checkmate! #{color.capitalize} wins!"
@@ -136,7 +173,14 @@ class PieceManager
       else
         puts "#{opponent_color.capitalize} is in check!"
       end
+    # Check for stalemate
+    elsif stalemate?(opponent_color)
+      puts "Stalemate! The game is a draw."
+      exit
     end
+
+    # Check for other draw conditions
+    check_draw_conditions
 
     [start_coords, end_coords]
   end
@@ -175,6 +219,13 @@ class PieceManager
       rook.coords = [5, row]
       rook.has_moved = true
 
+      # Update halfmove clock
+      @halfmove_clock += 1
+
+      # Update position history
+      position_key = generate_position_key
+      @position_history[position_key] = (@position_history[position_key] || 0) + 1
+
       puts "Kingside castling performed"
     else
       rook = @pieces.find { |p| p.is_a?(Rook) && p.color == color && p.coords == [0, row] }
@@ -194,6 +245,13 @@ class PieceManager
       king.has_moved = true
       rook.coords = [3, row]
       rook.has_moved = true
+
+      # Update halfmove clock
+      @halfmove_clock += 1
+
+      # Update position history
+      position_key = generate_position_key
+      @position_history[position_key] = (@position_history[position_key] || 0) + 1
 
       puts "Queenside castling performed"
     end
@@ -254,6 +312,11 @@ class PieceManager
     false
   end
 
+  def stalemate?(color)
+    # If the king is not in check but has no legal moves, it's stalemate
+    !king_in_check?(color) && no_legal_moves?(color)
+  end
+
   def no_legal_moves?(color)
     @pieces.select { |p| p.color == color }.all? do |piece|
       piece.generate_valid_moves(@pieces).all? do |move|
@@ -288,5 +351,66 @@ class PieceManager
     @pieces.push(captured_piece) if captured_piece
 
     king_exposed
+  end
+
+  # Draw detection methods
+
+  def insufficient_material?
+    # King vs King
+    return true if @pieces.length == 2
+
+    # King and Bishop vs King or King and Knight vs King
+    if @pieces.length == 3
+      return true if @pieces.any? { |p| p.is_a?(Bishop) }
+      return true if @pieces.any? { |p| p.is_a?(Knight) }
+    end
+
+    # King and Bishop vs King and Bishop with same color bishops
+    if @pieces.length == 4 && @pieces.count { |p| p.is_a?(Bishop) } == 2
+      bishops = @pieces.select { |p| p.is_a?(Bishop) }
+      # Check if bishops are on same colored squares
+      return true if bishops[0].coords.sum % 2 == bishops[1].coords.sum % 2
+    end
+
+    false
+  end
+
+  def fifty_move_rule?
+    @halfmove_clock >= 100 # 50 moves = 100 half-moves
+  end
+
+  def threefold_repetition?
+    @position_history.any? { |_, count| count >= 3 }
+  end
+
+  def check_draw_conditions
+    if insufficient_material?
+      puts "Draw by insufficient material."
+      exit
+    elsif fifty_move_rule?
+      puts "Draw by fifty-move rule."
+      exit
+    elsif threefold_repetition?
+      puts "Draw by threefold repetition."
+      exit
+    end
+  end
+
+  def can_claim_draw?
+    fifty_move_rule? || threefold_repetition?
+  end
+
+  def generate_position_key
+    pieces_key = @pieces.map do |piece|
+      "#{piece.class.name[0]}#{piece.color[0]}#{piece.coords.join}"
+    end.sort.join("|")
+
+    kings = @pieces.select { |p| p.is_a?(King) }
+    rooks = @pieces.select { |p| p.is_a?(Rook) }
+
+    castling_rights = kings.map { |k| "#{k.color}#{k.has_moved ? '0' : '1'}" }.join
+    castling_rights += rooks.map { |r| "#{r.color}#{r.coords.join}#{r.has_moved ? '0' : '1'}" }.join
+
+    "#{pieces_key}|#{castling_rights}"
   end
 end

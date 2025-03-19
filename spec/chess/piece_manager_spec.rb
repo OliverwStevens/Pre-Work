@@ -308,4 +308,235 @@ describe PieceManager do
       end
     end
   end
+
+  describe "draw conditions" do
+    context "Stalemate" do
+      it "detects stalemate correctly" do
+        # Set up a classic stalemate position
+        # Black king on a8, white king on c6, white queen on b6
+        pieces = []
+        pieces << King.new("white", [2, 5])  # White king on c6
+        pieces << Queen.new("white", [1, 5]) # White queen on b6
+        pieces << King.new("black", [0, 7])  # Black king on a8
+
+        custom_manager = PieceManager.new(pieces)
+        allow($stdout).to receive(:puts)
+
+        custom_manager.input_handler("white", "b6 b7", [])
+
+        # Black has no legal moves but is not in check - stalemate
+        expect(custom_manager).to receive(:puts).with("Stalemate! The game is a draw.")
+        expect(custom_manager).to receive(:exit)
+      end
+    end
+
+    context "Insufficient Material" do
+      it "detects king vs king as draw" do
+        pieces = []
+        pieces << King.new("white", [4, 0])
+        pieces << King.new("black", [4, 7])
+
+        custom_manager = PieceManager.new(pieces)
+        allow($stdout).to receive(:puts)
+
+        expect(custom_manager).to receive(:puts).with("Draw by insufficient material.")
+        expect(custom_manager).to receive(:exit)
+
+        custom_manager.input_handler("white", "e1 e2", [])
+      end
+
+      it "detects king and bishop vs king as draw" do
+        pieces = []
+        pieces << King.new("white", [4, 0])
+        pieces << Bishop.new("white", [2, 0])
+        pieces << King.new("black", [4, 7])
+
+        custom_manager = PieceManager.new(pieces)
+        allow($stdout).to receive(:puts)
+
+        expect(custom_manager).to receive(:puts).with("Draw by insufficient material.")
+        expect(custom_manager).to receive(:exit)
+
+        custom_manager.input_handler("white", "e1 e2", [])
+      end
+
+      it "detects king and knight vs king as draw" do
+        pieces = []
+        pieces << King.new("white", [4, 0])
+        pieces << Knight.new("white", [3, 0])
+        pieces << King.new("black", [4, 7])
+
+        custom_manager = PieceManager.new(pieces)
+        allow($stdout).to receive(:puts)
+
+        expect(custom_manager).to receive(:puts).with("Draw by insufficient material.")
+        expect(custom_manager).to receive(:exit)
+
+        custom_manager.input_handler("white", "e1 e2", [])
+      end
+
+      it "detects kings with bishops on same colored squares as draw" do
+        pieces = []
+        pieces << King.new("white", [4, 0])
+        pieces << Bishop.new("white", [2, 0]) # white square bishop (c1)
+        pieces << King.new("black", [4, 7])
+        pieces << Bishop.new("black", [5, 7]) # white square bishop (f8)
+
+        custom_manager = PieceManager.new(pieces)
+        allow($stdout).to receive(:puts)
+
+        expect(custom_manager).to receive(:puts).with("Draw by insufficient material.")
+        expect(custom_manager).to receive(:exit)
+
+        custom_manager.input_handler("white", "c1 d2", [])
+      end
+
+      it "does not detect kings with bishops on different colored squares as draw" do
+        pieces = []
+        pieces << King.new("white", [4, 0])
+        pieces << Bishop.new("white", [2, 0]) # white square bishop (c1)
+        pieces << King.new("black", [4, 7])
+        pieces << Bishop.new("black", [2, 7]) # black square bishop (c8)
+
+        custom_manager = PieceManager.new(pieces)
+        allow($stdout).to receive(:puts)
+
+        expect(custom_manager).not_to receive(:puts).with("Draw by insufficient material.")
+        expect(custom_manager).not_to receive(:exit)
+
+        custom_manager.input_handler("white", "c1 d2", [])
+      end
+
+      it "does not detect king and queen vs king as draw" do
+        pieces = []
+        pieces << King.new("white", [4, 0])
+        pieces << Queen.new("white", [3, 0])
+        pieces << King.new("black", [4, 7])
+
+        custom_manager = PieceManager.new(pieces)
+        allow($stdout).to receive(:puts)
+
+        expect(custom_manager).not_to receive(:puts).with("Draw by insufficient material.")
+        expect(custom_manager).not_to receive(:exit)
+
+        custom_manager.input_handler("white", "d1 d2", [])
+      end
+    end
+
+    context "Fifty-Move Rule" do
+      it "detects draw after 50 moves without captures or pawn moves" do
+        pieces = []
+        pieces << King.new("white", [4, 0])
+        pieces << Rook.new("white", [0, 0])
+        pieces << King.new("black", [4, 7])
+
+        custom_manager = PieceManager.new(pieces)
+        custom_manager.halfmove_clock = 99 # One move away from 50-move rule draw
+        allow($stdout).to receive(:puts)
+
+        expect(custom_manager).to receive(:puts).with("Draw by fifty-move rule.")
+        expect(custom_manager).to receive(:exit)
+
+        custom_manager.input_handler("white", "e1 e2", [])
+      end
+
+      it "resets the counter after a capture" do
+        pieces = []
+        pieces << King.new("white", [4, 0])
+        pieces << Rook.new("white", [0, 0])
+        pieces << King.new("black", [4, 7])
+        pieces << Bishop.new("black", [1, 1]) # Can be captured by rook
+
+        custom_manager = PieceManager.new(pieces)
+        custom_manager.halfmove_clock = 99 # One move away from 50-move rule draw
+        allow($stdout).to receive(:puts)
+
+        # No draw should be called because the capture resets the counter
+        expect(custom_manager).not_to receive(:puts).with("Draw by fifty-move rule.")
+        expect(custom_manager).not_to receive(:exit)
+
+        # Capture the bishop
+        custom_manager.input_handler("white", "a1 b2", [])
+        expect(custom_manager.halfmove_clock).to eq(0)
+      end
+
+      it "resets the counter after a pawn move" do
+        pieces = []
+        pieces << King.new("white", [4, 0])
+        pieces << Pawn.new("white", [0, 1])
+        pieces << King.new("black", [4, 7])
+
+        custom_manager = PieceManager.new(pieces)
+        custom_manager.halfmove_clock = 99 # One move away from 50-move rule draw
+        allow($stdout).to receive(:puts)
+
+        # No draw should be called because the pawn move resets the counter
+        expect(custom_manager).not_to receive(:puts).with("Draw by fifty-move rule.")
+        expect(custom_manager).not_to receive(:exit)
+
+        # Move the pawn
+        custom_manager.input_handler("white", "a2 a3", [])
+        expect(custom_manager.halfmove_clock).to eq(0)
+      end
+    end
+
+    context "Threefold Repetition" do
+      it "detects draw after position repeats three times" do
+        pieces = []
+        pieces << King.new("white", [4, 0])
+        pieces << Rook.new("white", [0, 0])
+        pieces << King.new("black", [4, 7])
+        pieces << Rook.new("black", [0, 7])
+
+        custom_manager = PieceManager.new(pieces)
+        allow($stdout).to receive(:puts)
+
+        # Simulate the same position occurring twice already
+        position_key = custom_manager.generate_position_key
+        custom_manager.instance_variable_set(:@position_history, { position_key => 2 })
+
+        # Next occurrence should trigger threefold repetition
+        expect(custom_manager).to receive(:puts).with("Draw by threefold repetition.")
+        expect(custom_manager).to receive(:exit)
+
+        # Move back to the same position
+        custom_manager.input_handler("white", "e1 e2", [])
+        custom_manager.input_handler("black", "e8 e7", [])
+        custom_manager.input_handler("white", "e2 e1", [])
+        custom_manager.input_handler("black", "e7 e8", [])
+      end
+    end
+
+    context "Draw Claims" do
+      it "allows claiming a draw when fifty-move rule applies" do
+        pieces = []
+        pieces << King.new("white", [4, 0])
+        pieces << King.new("black", [4, 7])
+
+        custom_manager = PieceManager.new(pieces)
+        custom_manager.halfmove_clock = 100 # 50-move rule applies
+        allow($stdout).to receive(:puts)
+
+        expect(custom_manager).to receive(:puts).with("Draw claimed and accepted.")
+        expect(custom_manager).to receive(:exit)
+
+        custom_manager.input_handler("white", "draw", [])
+      end
+
+      it "does not allow claiming a draw when conditions aren't met" do
+        pieces = []
+        pieces << King.new("white", [4, 0])
+        pieces << King.new("black", [4, 7])
+
+        custom_manager = PieceManager.new(pieces)
+        custom_manager.halfmove_clock = 50 # Not enough for 50-move rule
+        allow($stdout).to receive(:puts)
+
+        expect(custom_manager).to receive(:puts).with("Cannot claim draw at this time.")
+        expect(custom_manager).not_to receive(:exit)
+
+        custom_manager.input_handler("white", "draw", [])
+      end
+    end
+  end
 end
