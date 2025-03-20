@@ -1,0 +1,4 @@
+SELECT name 
+FROM world 
+WHERE GDP > ALL (SELECT GDP FROM world WHERE continent = 'Europe' AND GDP IS NOT NULL)
+AND GDP IS NOT NULL;
