@@ -1,0 +1,1 @@
+SELECT * FROM nobel WHERE winner = 'PETER GRÜNBERG'
