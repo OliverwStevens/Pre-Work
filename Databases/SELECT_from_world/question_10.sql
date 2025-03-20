@@ -1,0 +1,2 @@
+SELECT name, ROUND(GDP/population, -3) FROM world
+WHERE GDP >= 1000000000000
