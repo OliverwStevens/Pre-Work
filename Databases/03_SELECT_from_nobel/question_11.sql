@@ -1,1 +1,2 @@
-SELECT * FROM nobel WHERE winner = 'PETER GRÜNBERG'
+SELECT * FROM nobel 
+WHERE winner = 'PETER GRÜNBERG'

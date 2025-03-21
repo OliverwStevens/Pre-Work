@@ -1,3 +1,3 @@
 SELECT name
-  FROM world
- WHERE name LIKE capital
+FROM world
+WHERE name LIKE capital

@@ -1,2 +1,3 @@
-SELECT name, GDP/population FROM world
+SELECT name, GDP/population 
+FROM world
 WHERE population >= 200000000

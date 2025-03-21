@@ -1,1 +1,3 @@
-SELECT name, population, area FROM world WHERE area > 3000000 OR population > 250000000
+SELECT name, population, area 
+FROM world 
+WHERE area > 3000000 OR population > 250000000

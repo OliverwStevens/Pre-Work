@@ -1,3 +1,3 @@
 SELECT name
-  FROM world
- WHERE capital LIKE '%City'
+FROM world
+WHERE capital LIKE '%City'

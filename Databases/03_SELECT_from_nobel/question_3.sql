@@ -1,3 +1,3 @@
 SELECT yr, subject
-  FROM nobel
- WHERE winner = 'Albert Einstein'
+FROM nobel
+WHERE winner = 'Albert Einstein'

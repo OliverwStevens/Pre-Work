@@ -1,3 +1,3 @@
 SELECT yr, subject, winner
-  FROM nobel
- WHERE yr = 1950
+FROM nobel
+WHERE yr = 1950

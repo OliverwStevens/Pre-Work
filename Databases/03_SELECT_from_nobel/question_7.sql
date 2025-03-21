@@ -1,1 +1,3 @@
-SELECT winner FROM nobel WHERE winner LIKE 'John_%'
+SELECT winner 
+FROM nobel 
+WHERE winner LIKE 'John_%'
