@@ -62,6 +62,24 @@ div {
     width: 50%;
     background-color: lightgray;
 }
+
+.personal-container {
+    background-color: white;
+}
+.personal-info {
+    display: flex;
+}
+.personal-info div{
+    display: flex;       
+    align-items: center; 
+    justify-content: center;
+    flex: auto;
+    flex-direction: column;
+    font-size: small;
+}
+input {
+    width: 7rem;
+}
 .underline {
     text-decoration: underline;
   }
