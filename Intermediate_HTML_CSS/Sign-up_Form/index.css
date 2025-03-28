@@ -1,20 +1,67 @@
 @import url('https://fonts.googleapis.com/css2?family=Tangerine&display=swap');
 
 div {
-    font-family: 'Tangerine', 'Times New Roman', Times, serif
+    font-family: 'Times New Roman', Times, serif;
 }
 
 .container {
     display: flex;
 }
+
 .left {
     width: 50%;
+    position: relative; 
 }
+
 .left img {
     width: 100%;
     height: auto;
+    display: block; 
+}
+
+.left div {
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+
+.logo-container {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    width: 100%;
+    display: flex;       
+    align-items: center; 
+    justify-content: center;
+    gap: 10px;
+    background-color: rgba(0, 0, 0, .5)
+}
+
+.logo-container img {
+    width: 40px;
+    height: auto;
+}
+
+.logo-container span {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    font-family: 'Tangerine', 'Times New Roman', Times, serif;
+
+}
+
+.credit-caption {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    width: 100%;
+    color: lightgray;
+    font-size: xx-small;
 }
 .right {
     width: 50%;
     background-color: lightgray;
 }
+.underline {
+    text-decoration: underline;
+  }
