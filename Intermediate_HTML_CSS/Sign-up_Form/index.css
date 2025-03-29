@@ -66,11 +66,13 @@ div {
     font-weight: bold;
 }
 .personal-container {
+    height: 15rem;
     background-color: white;
     box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.2);
 }
 .personal-info {
     display: flex;
+    height: 3rem;
 }
 
 .personal-info div{
@@ -103,6 +105,7 @@ input:focus {
     box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.2);
 }
 button {
+    margin-left: 1rem;
     padding: 5px 10px;
     font-size: 16px;
     background-color: gray;
@@ -118,4 +121,8 @@ button {
 }
 .underline {
     text-decoration: underline;
+  }
+  .indent {
+    margin-left: 1rem;
+    padding-top: 1rem;
   }
