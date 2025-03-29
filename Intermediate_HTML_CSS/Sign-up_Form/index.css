@@ -65,6 +65,7 @@ div {
 
 .personal-container {
     background-color: white;
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.2);;
 }
 .personal-info {
     display: flex;
@@ -79,6 +80,20 @@ div {
 }
 input {
     width: 7rem;
+}
+button {
+    padding: 5px 10px;
+    font-size: 16px;
+    background-color: gray;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px; /* Adjust this value for more or less roundness */
+  }
+.log-in {
+    text-decoration: none;
+    color: darkmagenta;
+
 }
 .underline {
     text-decoration: underline;
