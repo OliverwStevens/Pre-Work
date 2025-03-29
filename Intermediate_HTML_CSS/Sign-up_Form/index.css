@@ -80,6 +80,21 @@ div {
 }
 input {
     width: 7rem;
+    border: 2px solid #E5E7EB;
+    outline: none;
+}
+
+input:user-invalid {
+    border: 2px solid darkred;
+    outline: none;
+}
+input:user-valid {
+    border: 2px solid seagreen;
+    outline: none;
+}
+input:focus {
+    border: 2px solid slateblue;
+    outline: none;
 }
 button {
     padding: 5px 10px;
