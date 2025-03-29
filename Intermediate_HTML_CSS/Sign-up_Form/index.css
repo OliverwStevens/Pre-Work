@@ -60,26 +60,31 @@ div {
 }
 .right {
     width: 50%;
-    background-color: lightgray;
+    background-color: rgb(235, 235, 235);
 }
-
+.title {
+    font-weight: bold;
+}
 .personal-container {
     background-color: white;
-    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.2);;
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.2);
 }
 .personal-info {
     display: flex;
 }
+
 .personal-info div{
     display: flex;       
     align-items: center; 
     justify-content: center;
-    flex: auto;
+    flex: 1;
     flex-direction: column;
     font-size: small;
+    max-width: 10rem;
+    
 }
 input {
-    width: 7rem;
+    width: 8rem;
     border: 2px solid #E5E7EB;
     outline: none;
 }
