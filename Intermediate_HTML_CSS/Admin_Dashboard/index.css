@@ -24,7 +24,7 @@ body, html {
     position: fixed;
     background-color: #F5E3E0;
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 2fr;
     left: 30vw;
     top: 0;
     width: 70vw;
@@ -41,11 +41,17 @@ body, html {
     }
 }
 
-#header div {
-    background-color: red;
+.header-row-1 {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 4fr 4fr 3fr;
+    place-items: center;
+
+}
+.header-row-2 {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
     place-items: center;
 }
 .header-icon {
@@ -58,10 +64,18 @@ body, html {
 }
 #search-bar {
     border-radius: 1rem;
-    width: 8rem;
+    width: 30rem;
     height: 2rem;
 }
+.like-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.bold-font {
+    font-weight: bold;
+}
 .image-button {
     display: grid;
     grid-template-columns: auto 1fr;
