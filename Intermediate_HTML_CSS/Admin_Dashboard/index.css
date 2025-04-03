@@ -51,7 +51,7 @@ body, html {
 .header-row-2 {
     width: 100%;
     display: grid;
-    grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
+    grid-template-columns: repeat(10, 3fr);
     place-items: center;
 }
 .header-icon {
@@ -61,6 +61,11 @@ body, html {
 }
 .profile-pic {
     border-radius: 50%;
+}
+.header-row-2 .profile-pic {
+    width: 4rem;
+    height: 4rem;
+    margin-left: 2rem;
 }
 #search-bar {
     border-radius: 1rem;
@@ -75,6 +80,16 @@ body, html {
 
 .bold-font {
     font-weight: bold;
+}
+.big {
+    font-size: large;
+}
+#new-btn {
+    grid-column: 8 / 9;
+
+}
+#name-column {
+    grid-column: 2 / 4;
 }
 .pink-button {
     background-color: #E8B4BC;
