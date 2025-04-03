@@ -31,7 +31,6 @@ body {
 }
 .dashboard-text {
     margin-left: 1rem;
-    font-size: large;
     color: #3A3238;
 }
 
@@ -69,7 +68,7 @@ body {
 #project-panel {
     background-color: red;
     display: grid;
-    grid-template-rows: 1fr 9fr
+    grid-template-rows: 1fr 10fr 1fr;
 }
 #projects {
     display: grid;
@@ -80,8 +79,13 @@ body {
 .project {
     background-color: aqua;
     border-radius: 5px;
-    text-align: center;
     margin: 1rem;
+}
+.project-buttons {
+    width: 3rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-left: auto;
 }
 #activity-feed {
     background-color: green;
