@@ -29,6 +29,11 @@ body {
 .big {
     font-size: large;
 }
+.dashboard-text {
+    margin-left: 1rem;
+    font-size: large;
+    color: #3A3238;
+}
 
 /* ==========================================================================
    Layout Components
@@ -61,10 +66,23 @@ body {
     grid-template-columns: 6fr 2fr;
 }
 
-#projects {
-    background-color: blue;
+#project-panel {
+    background-color: red;
+    display: grid;
+    grid-template-rows: 1fr 9fr
 }
-
+#projects {
+    display: grid;
+    grid-template-rows: repeat(3, 4fr);
+    grid-template-columns: 1fr 1fr;
+    overflow-y: auto;
+}
+.project {
+    background-color: aqua;
+    border-radius: 5px;
+    text-align: center;
+    margin: 1rem;
+}
 #activity-feed {
     background-color: green;
 }
