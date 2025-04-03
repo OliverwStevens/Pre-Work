@@ -76,6 +76,24 @@ body, html {
 .bold-font {
     font-weight: bold;
 }
+.pink-button {
+    background-color: #E8B4BC;
+    width: 5rem;
+    height: 2rem;
+    border-radius: 2rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.pink-button:hover {
+    background-color: #d999a3;
+}
+
+.pink-button:active {
+    background-color: #c77c8e;
+}
+
 .image-button {
     display: grid;
     grid-template-columns: auto 1fr;
