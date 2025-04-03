@@ -122,12 +122,13 @@
 /* Buttons */
 .pink-button {
     background-color: #E8B4BC;
-    width: 5rem;
-    height: 2rem;
+    width: 6rem;
+    height: 2.25rem;
     border-radius: 2rem;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
+    color: white;
 }
 
 .pink-button:hover {
