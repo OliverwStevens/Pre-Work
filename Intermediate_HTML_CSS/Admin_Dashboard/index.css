@@ -1,9 +1,27 @@
-body, html {
+/* ==========================================================================
+   Base Styles
+   ========================================================================== */
+   body, html {
     margin: 0;
     padding: 0;
     width: 100%;
 }
 
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+.bold-font {
+    font-weight: bold;
+}
+
+.big {
+    font-size: large;
+}
+
+/* ==========================================================================
+   Layout Components
+   ========================================================================== */
+/* Sidebar */
 #sidebar {
     height: 100vh;
     width: 30vw;
@@ -20,6 +38,7 @@ body, html {
     z-index: 10;
 }
 
+/* Header */
 #header {
     position: fixed;
     background-color: #F5E3E0;
@@ -34,63 +53,72 @@ body, html {
     box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
 }
 
-@media (min-width: 1000px) {
-    #header {
-        left: 300px; 
-        width: calc(100% - 300px);
-    }
-}
-
 .header-row-1 {
     width: 100%;
     display: grid;
     grid-template-columns: 4fr 4fr 3fr;
     place-items: center;
-
 }
+
 .header-row-2 {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(10, 3fr);
     place-items: center;
 }
+
 .header-icon {
     width: 2em;
     height: 2rem;
     margin-right: 0.75rem;
 }
-.profile-pic {
-    border-radius: 50%;
+
+#title {
+    font-size: 1.5rem;
+    justify-content: center;
+    padding: 20px;
 }
-.header-row-2 .profile-pic {
-    width: 4rem;
-    height: 4rem;
-    margin-left: 2rem;
+
+#title img {
+    width: 2.5rem;
+    height: 2.5rem;
 }
+
 #search-bar {
     border-radius: 1rem;
     width: 30rem;
     height: 2rem;
 }
-.like-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-.bold-font {
-    font-weight: bold;
-}
-.big {
-    font-size: large;
-}
 #new-btn {
     grid-column: 8 / 9;
-
 }
+
 #name-column {
     grid-column: 2 / 4;
 }
+
+#settings {
+    margin-top: 3rem;
+}
+
+/* ==========================================================================
+   Images & Media
+   ========================================================================== */
+.profile-pic {
+    border-radius: 50%;
+}
+
+.header-row-2 .profile-pic {
+    width: 4rem;
+    height: 4rem;
+    margin-left: 2rem;
+}
+
+/* ==========================================================================
+   UI Components
+   ========================================================================== */
+/* Buttons */
 .pink-button {
     background-color: #E8B4BC;
     width: 5rem;
@@ -139,15 +167,19 @@ body, html {
     margin-right: 0.75rem;
 }
 
-#settings {
-    margin-top: 3rem;
-}
-#title {
-    font-size: 1.5rem;
+/* Other UI Components */
+.like-box {
+    display: flex;
     justify-content: center;
-    padding: 20px;
+    align-items: center;
 }
-#title img {
-    width: 2.5rem;
-    height: 2.5rem;
+
+/* ==========================================================================
+   Media Queries
+   ========================================================================== */
+@media (min-width: 1000px) {
+    #header {
+        left: 300px; 
+        width: calc(100% - 300px);
+    }
 }
