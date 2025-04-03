@@ -94,6 +94,15 @@ body, html {
     background-color: #c77c8e;
 }
 
+.icon-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
 .image-button {
     display: grid;
     grid-template-columns: auto 1fr;
