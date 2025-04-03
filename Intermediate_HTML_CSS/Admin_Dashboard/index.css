@@ -56,8 +56,17 @@ body {
 /* Dashboard */
 #dashboard {
     grid-area: dashboard;
-    background-color: red;
     overflow-y: auto;
+    display: grid;
+    grid-template-columns: 6fr 2fr;
+}
+
+#projects {
+    background-color: blue;
+}
+
+#activity-feed {
+    background-color: green;
 }
 
 .header-row-1 {
