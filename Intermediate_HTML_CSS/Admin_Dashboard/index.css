@@ -99,25 +99,23 @@ body {
     background-color: green;
 }
 #announcements {
-    background-color: red;
+    background-color: #F5E3E0;
     display: grid;
+    border-radius: 5px;
+    margin: 1rem;
     grid-template-rows: repeat(3, 1fr);
 
 }
-#announcements:last-child {
+.announcement:last-child {
     border-bottom: none;
 }
 .announcement {
-    background-color: aqua;
-    border-radius: 5px;
-    border-bottom: .5rem solid black;
-    margin: 1rem;
 
-    height: auto;
+    margin: 0 1rem;
+    border-bottom: .2rem solid #3A3238;
     display: grid;
-    grid-template-rows: 1fr minmax(100px, auto);
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
+    grid-template-rows: minmax(10px, 30px) minmax(50px, auto);
+
 
 }
 
