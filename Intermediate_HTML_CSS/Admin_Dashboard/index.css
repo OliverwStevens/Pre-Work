@@ -29,6 +29,9 @@ body {
 .big {
     font-size: large;
 }
+.medium {
+    font-size: medium;
+}
 .dashboard-text {
     margin-left: 1rem;
     color: #3A3238;
@@ -95,6 +98,29 @@ body {
 #activity-feed {
     background-color: green;
 }
+#announcements {
+    background-color: red;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+
+}
+#announcements:last-child {
+    border-bottom: none;
+}
+.announcement {
+    background-color: aqua;
+    border-radius: 5px;
+    border-bottom: .5rem solid black;
+    margin: 1rem;
+
+    height: auto;
+    display: grid;
+    grid-template-rows: 1fr minmax(100px, auto);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+
+}
+
 
 .header-row-1 {
     width: 100%;
