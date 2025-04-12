@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "../../Ruby/associated-exercises/my_enumerables"
+require_relative "../../Ruby/custom-enumerables/my_enumerables"
 
 RSpec.describe Enumerable do
   subject(:enumerable) { [1, 1, 2, 3, 5, 8, 13, 21, 34] }
