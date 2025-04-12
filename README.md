@@ -40,7 +40,9 @@ A comprehensive repository containing all completed projects undertaken within t
        - Save and load system
        - Lots and lots of words
          
-    ////////////Custom Enumerables to be added from other repo
+    - Custom Enumerables
+       - Enumerable methods recreated
+       - RSpec tests
 
     - Recursion Project
        - Iterative and recursive Fibonacci sequence generators
