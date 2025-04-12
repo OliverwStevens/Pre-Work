@@ -16,6 +16,8 @@ A comprehensive repository containing all completed projects undertaken within t
        - The four operations + - * /
        - Decimal and negative number input
 2. Ruby Course Projects
+    ////////////Associated Exercises to be added from other repo
+   
     - Caesar Cipher Project
        - Codes and decodes messages
        - How to use
@@ -40,9 +42,36 @@ A comprehensive repository containing all completed projects undertaken within t
          
     ////////////Custom Enumerables to be added from other repo
 
-    - Recursion
+    - Recursion Project
        - Iterative and recursive Fibonacci sequence generators
        - Recursive merge sort algorithm
+   - Linked List Project
+       - Linked list data structure methods
+   - Hashmap Project
+       - Hashmap data structure and methods
+       - Hashset data structure and methods
+   - Binary Search Tree Project
+       - Binary tree data structure and methods
+   - Knights Travails Project
+       - Uses BFS to find the shortest path for a knight between any two squares
+   - Connect Four Project
+       - Boring command-line game for two players
+       - Move validation
+       - TDD with RSpec tests
+   - Chess Project
+       - Fun chess command-line game for two players
+       - Castling
+       - En passant
+       - Pawn promotion
+       - Draw handling
+       - Move validation
+       - Save and load system
+       - TDD with RSpec tests
+4. Databases Course
+   - All solution queries for the SQL Zoo Project
+5. Intermediate HTML and CSS Course
+   - Sign Up Form Project
+   - Admin Dashboard Project
 ## Installation:
 
 Clone repository: 
@@ -60,3 +89,9 @@ Install dependencies:
 Run tests:
 
     rspec spec
+Run Connect Four Project tests:
+
+    rspec spec/connect-four
+Run Chess Project tests:
+
+    rspec spec/chess
