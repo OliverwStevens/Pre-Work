@@ -1,5 +1,11 @@
 require_relative "../../Ruby/chess/lib/piece_manager"
 
+RSpec.configure do |config|
+  config.before(:each) do
+    allow_any_instance_of(PieceManager).to receive(:exit)
+  end
+end
+
 describe PieceManager do
   describe "game simulations" do
     let(:piece_manager) { PieceManager.new }
