@@ -34,11 +34,11 @@ end
 
 def isogram?(string)
   original_length = string.length
-  puts(original_length)
+  # puts(original_length)
   string_array = string.downcase.chars
-  puts(string_array[0])
+  # puts(string_array[0])
   unique_length = string_array.uniq.length
-  p(unique_length)
+  # p(unique_length)
   original_length == unique_length
 end
 
