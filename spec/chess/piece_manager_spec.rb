@@ -496,11 +496,6 @@ describe PieceManager do
         custom_manager = PieceManager.new(pieces)
         allow($stdout).to receive(:puts)
 
-        # Simulate the same position occurring twice already
-        position_key = custom_manager.generate_position_key
-        custom_manager.instance_variable_set(:@position_history, { position_key => 2 })
-
-        # Next occurrence should trigger threefold repetition
         expect(custom_manager).to receive(:puts).with("Draw by threefold repetition.")
         expect(custom_manager).to receive(:exit)
 
@@ -509,6 +504,12 @@ describe PieceManager do
         custom_manager.input_handler("black", "e8 e7", [])
         custom_manager.input_handler("white", "e2 e1", [])
         custom_manager.input_handler("black", "e7 e8", [])
+        custom_manager.input_handler("white", "e1 e2", [])
+        custom_manager.input_handler("black", "e8 e7", [])
+        custom_manager.input_handler("white", "e2 e1", [])
+        custom_manager.input_handler("black", "e7 e8", [])
+        custom_manager.input_handler("white", "e1 e2", [])
+        custom_manager.input_handler("black", "e8 e7", [])
       end
     end
 
