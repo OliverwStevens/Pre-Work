@@ -318,22 +318,25 @@ class PieceManager
   end
 
   def no_legal_moves?(color)
-    @pieces.select { |p| p.color == color }.all? do |piece|
-      piece.generate_valid_moves(@pieces).all? do |move|
-        # Simulate each move and check if it gets the king out of check
+    @pieces.select { |p| p.color == color }.none? do |piece|
+      valid_moves = piece.generate_valid_moves(@pieces)
+      valid_moves.any? do |move|
+        # Simulate the move
         original_coords = piece.coords
         captured_piece = @pieces.find { |p| p.coords == move }
 
         piece.coords = move
         @pieces.delete(captured_piece) if captured_piece
 
-        still_in_check = king_in_check?(color)
+        # Check if the king is safe after this move
+        king_safe = !king_in_check?(color)
 
-        # Undo move
+        # Undo the move
         piece.coords = original_coords
         @pieces.push(captured_piece) if captured_piece
 
-        still_in_check
+        # Return true if this move is legal (doesn't leave king in check)
+        king_safe
       end
     end
   end

@@ -322,17 +322,16 @@ describe PieceManager do
         # Black king on a8, white king on c6, white queen on b6
         pieces = []
         pieces << King.new("white", [2, 5])  # White king on c6
-        pieces << Queen.new("white", [1, 5]) # White queen on b6
+        pieces << Queen.new("white", [1, 4]) # White queen on b5
         pieces << King.new("black", [0, 7])  # Black king on a8
 
         custom_manager = PieceManager.new(pieces)
         allow($stdout).to receive(:puts)
 
-        custom_manager.input_handler("white", "b6 b7", [])
-
-        # Black has no legal moves but is not in check - stalemate
         expect(custom_manager).to receive(:puts).with("Stalemate! The game is a draw.")
         expect(custom_manager).to receive(:exit)
+
+        custom_manager.input_handler("white", "b5 b6", [])
       end
     end
 
