@@ -448,22 +448,22 @@ describe PieceManager do
 
       it "resets the counter after a capture" do
         pieces = []
-        pieces << King.new("white", [4, 0])
-        pieces << Rook.new("white", [0, 0])
+        pieces << King.new("white", [0, 0])
+        pieces << Rook.new("white", [4, 0])
         pieces << King.new("black", [4, 7])
-        pieces << Bishop.new("black", [1, 1]) # Can be captured by rook
+        pieces << Bishop.new("black", [1, 1]) # Can be captured by king
 
         custom_manager = PieceManager.new(pieces)
         custom_manager.halfmove_clock = 99 # One move away from 50-move rule draw
         allow($stdout).to receive(:puts)
 
-        # No draw should be called because the capture resets the counter
-        expect(custom_manager).not_to receive(:puts).with("Draw by fifty-move rule.")
-        expect(custom_manager).not_to receive(:exit)
-
         # Capture the bishop
         custom_manager.input_handler("white", "a1 b2", [])
         expect(custom_manager.halfmove_clock).to eq(0)
+
+        # No draw should be called because the capture resets the counter
+        expect(custom_manager).not_to receive(:puts).with("Draw by fifty-move rule.")
+        expect(custom_manager).not_to receive(:exit)
       end
 
       it "resets the counter after a pawn move" do
