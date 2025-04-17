@@ -22,7 +22,7 @@ A comprehensive repository containing all completed projects undertaken within t
 ### Ruby Course Projects
 
 - **Associated Ruby Exercises**
-  - Completed problems and tests
+  - Completed problems with tests passing
 - **Caesar Cipher Project**
   - Codes and decodes messages
   - How to use:
@@ -60,11 +60,11 @@ A comprehensive repository containing all completed projects undertaken within t
 - **Knights Travails Project**
   - Uses BFS to find the shortest path for a knight between any two squares
 - **Connect Four Project**
-  - Command-line game for two players
+  - Boring command-line game for two players
   - Move validation
   - TDD with RSpec tests
 - **Chess Project**
-  - Chess command-line game for two players
+  - Fun chess command-line game for two players
   - Features: castling, en passant, pawn promotion, draw handling
   - Move validation
   - Save and load system
@@ -93,7 +93,7 @@ Install dependencies:
 
     bundle install
 
-Run tests:
+Run all tests:
 
     rspec spec
 Run Connect Four Project tests:
